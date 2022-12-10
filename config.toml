@@ -1,0 +1,32 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = ".kovarsky"
+theme = "cactus"
+
+# Main menu which appears below site header.
+[[menu.main]]
+name = "Home"
+url = "/"
+weight = 1
+
+[[menu.main]]
+name = "Writings"
+url = "/posts"
+weight = 2
+
+[[menu.main]]
+name = "NLP"
+url = "/nlp_course"
+weight = 3
+
+[[menu.main]]
+name = "About"
+url = "/about"
+weight = 4
+
+[params]
+colortheme = "classic" # dark, light, white, or classic
+
+  [[params.social]]
+    name = "github"
+    link = "https://github.com/kovarsky"

@@ -1,0 +1,103 @@
+baseURL: "https://yourusername.github.io/"
+title: ".kovarsky"
+theme: "PaperMod"
+languageCode: "en-us"
+
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+
+params:
+  env: production
+  title: ".kovarsky"
+  description: "My personal blog about ML, DeFi, travel and genealogy"
+  author: "Your Name"
+  
+  defaultTheme: auto # dark, light, auto
+  disableThemeToggle: false
+
+  ShowReadingTime: true
+  ShowShareButtons: false
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowWordCount: true
+  ShowRssButtonInSectionTermList: true
+  UseHugoToc: true
+  disableSpecial1stPost: false
+  disableScrollToTop: false
+  comments: false
+  hidemeta: false
+  hideSummary: false
+  showtoc: true
+  tocopen: false
+
+  # Главная страница
+  homeInfoParams:
+    Title: "Hi there 👋"
+    Content: >
+      Welcome to my blog. I write about machine learning, 
+      DeFi, travels to hidden places, and genealogical research.
+
+  # Социальные иконки
+  socialIcons:
+    - name: github
+      url: "https://github.com/kovarsky"
+    - name: linkedin
+      url: "https://linkedin.com/in/yourprofile"
+    - name: email
+      url: "mailto:your@email.com"
+
+  # Кнопки на главной
+  buttons:
+    - name: Posts
+      url: posts
+    - name: Portfolio
+      url: portfolio
+
+# Меню навигации
+menu:
+  main:
+    - identifier: home
+      name: Home
+      url: /
+      weight: 1
+    - identifier: posts
+      name: Posts
+      url: /posts/
+      weight: 2
+    - identifier: portfolio
+      name: Portfolio
+      url: /portfolio/
+      weight: 3
+    - identifier: about
+      name: About
+      url: /about/
+      weight: 4
+    - identifier: search
+      name: Search
+      url: /search/
+      weight: 5
+
+# Настройки поиска
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON # для поиска
+
+# Markdown настройки
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    noClasses: false
+    style: monokai
+
+# Таксономия
+taxonomies:
+  tag: tags
+  category: categories
+  series: series

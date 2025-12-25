@@ -1,7 +1,9 @@
 baseURL: "https://kovarsky.github.io/"
-title: ".kovarsky"
+title: "BK"
 theme: "PaperMod"
 languageCode: "en-us"
+defaultContentLanguage: "en"
+defaultContentLanguageInSubdir: true
 
 enableRobotsTXT: true
 buildDrafts: false
@@ -10,11 +12,10 @@ buildExpired: false
 
 params:
   env: production
-  title: ".kovarsky"
+  title: "BK"
   description: "My personal blog about ML, DeFi, travel and genealogy"
   author: "Your Name"
-  
-  defaultTheme: auto # dark, light, auto
+  defaultTheme: auto
   disableThemeToggle: false
 
   ShowReadingTime: true
@@ -33,61 +34,83 @@ params:
   showtoc: true
   tocopen: false
 
-  # Главная страница
-  homeInfoParams:
-    Title: "Hi there 👋"
-    Content: >
-      Welcome to my blog. I write about machine learning, 
-      DeFi, travels to hidden places, and genealogical research.
-
-  # Социальные иконки
+  # Social icons (shared for all languages)
   socialIcons:
     - name: github
       url: "https://github.com/kovarsky"
-    - name: linkedin
-      url: "https://linkedin.com/in/yourprofile"
     - name: email
       url: "mailto:your@email.com"
 
-  # Кнопки на главной
-  buttons:
-    - name: Posts
-      url: posts
-    - name: Portfolio
-      url: portfolio
+languages:
+  en:
+    languageName: "English"
+    weight: 1
+    contentDir: "content/en"
+    params:
+      homeInfoParams:
+        Title: "Hi there 👋"
+        Content: "Welcome to my blog about ML, DeFi, travel, and genealogy research."
+    menu:
+      main:
+        - identifier: home
+          name: "Home"
+          url: /
+          weight: 1
+        - identifier: writings
+          name: "Writings"
+          url: /writings/
+          weight: 2
+        - identifier: works
+          name: "Works"
+          url: /works/
+          weight: 3
+        - identifier: travel
+          name: "Travel"
+          url: /travel/
+          weight: 4
+        - identifier: gallery
+          name: "Gallery"
+          url: /gallery/
+          weight: 5
+  ru:
+    languageName: "Русский"
+    weight: 2
+    contentDir: "content/ru"
+    params:
+      homeInfoParams:
+        Title: "Привет 👋"
+        Content: "Добро пожаловать в мой блог"
+    menu:
+      main:
+        - identifier: home
+          name: "Главная"
+          url: /
+          weight: 1
+        - identifier: writings
+          name: "Записи"
+          url: /writings/
+          weight: 2
+        - identifier: works
+          name: "Работы"
+          url: /works/
+          weight: 3
+        - identifier: travel
+          name: "Путешествия"
+          url: /travel/
+          weight: 4
+        - identifier: gallery
+          name: "Галерея"
+          url: /gallery/
+          weight: 5
 
-# Меню навигации
-menu:
-  main:
-    - identifier: home
-      name: Home
-      url: /
-      weight: 1
-    - identifier: posts
-      name: Posts
-      url: /posts/
-      weight: 2
-    - identifier: portfolio
-      name: Portfolio
-      url: /portfolio/
-      weight: 3
-    - identifier: about
-      name: About
-      url: /about/
-      weight: 4
-    - identifier: search
-      name: Search
-      url: /search/
-      weight: 5
-
-# Настройки поиска
+# Search / outputs
 outputs:
   home:
     - HTML
     - RSS
-    - JSON # для поиска
+    - JSON
 
-# Markdown настройки
+# Markdown settings
 markup:
   goldmark:
     renderer:
@@ -96,7 +119,7 @@ markup:
     noClasses: false
     style: monokai
 
-# Таксономия
+# Taxonomies
 taxonomies:
   tag: tags
   category: categories

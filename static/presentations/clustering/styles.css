@@ -72,3 +72,8 @@
 .reveal #applications-llm .conceptx-figure img{height:240px}
 #kmeans-scale .scale-comparison svg{height:300px}
 .reveal #other-algorithms .other-algorithms td{font-size:22px;line-height:1.25;padding-top:11px;padding-bottom:11px}
+
+/* Short lecture pseudocode; implementation details stay in speaker notes. */
+.simple-pseudo .pseudocode{font-size:23px;line-height:1.45;padding:22px 24px;align-self:start}
+.simple-pseudo .pseudocode>div{min-height:34px}
+.simple-pseudo .pseudo-notes{padding-top:14px}

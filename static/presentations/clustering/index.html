@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<script src="lecture_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lecture_files/libs/quarto-html/tabby.min.js"></script>
+<script src="lecture_files/libs/quarto-html/popper.min.js"></script>
+<script src="lecture_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="lecture_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lecture_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="lecture_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <title>Кластеризация</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="lecture_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="lecture_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="lecture_files/libs/revealjs/dist/theme/quarto-0427d8d92a431aa6a6430e53ec02a470.css">
+  <link rel="stylesheet" href="styles.css">
+  <link href="lecture_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="lecture_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="lecture_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="lecture_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+
+<section id="title" class="slide level2 cover">
+<h2>Кластеризация</h2>
+<div class="cover-layout"><div class="cover-text"><p class="cover-subtitle">Обучение без учителя</p><p class="cover-description">Постановка задачи, расстояния<br>и алгоритмы кластеризации</p></div><figure class="cover-art"><img src="assets/kandinsky-circles-in-a-circle.jpg" alt="Василий Кандинский. Круги в круге, 1923"><figcaption>Василий Кандинский · «Круги в круге», 1923<br><a href="https://www.philamuseum.org/objects/51019">Philadelphia Museum of Art</a></figcaption></figure></div>
+<aside class="notes">
+<p>На обложке — «Круги в круге» Василия Кандинского (1923). Репродукция: <a href="https://commons.wikimedia.org/wiki/File:Kandinsky_-_Circles_in_a_Circle,_1923,_1950-134-104.jpg">Wikimedia Commons</a>, public domain.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="ml-tasks" class="slide level2">
+<h2>Задачи машинного обучения</h2>
+<div class="ml-formal">
+<div class="ml-row"><div><h3>С учителем</h3><p>Есть признаки xᵢ и ответы yᵢ.<br>Учимся предсказывать ответ.</p><p class="secondary">Классификация: <span data-tex="\mathcal Y=\{1,\ldots,C\}"></span><br>Регрессия: <span data-tex="\mathcal Y=\mathbb R"></span></p></div><div><div data-tex="D=\{(x_i,y_i)\}_{i=1}^n,\quad f:\mathbb R^d\to\mathcal Y"></div><div data-tex="\hat f\in\arg\min_{f\in\mathcal F}\frac1n\sum_{i=1}^{n}\ell(f(x_i),y_i)" data-display=""></div><p class="math-key">ℱ — класс моделей, ℓ — ошибка предсказания.</p></div></div>
+<div class="ml-row"><div><h3>Без учителя</h3><p>Есть объекты, ответов нет.<br>Ищем структуру данных.</p><p class="secondary">Пример: кластеризация<br>с выбранным критерием Q.</p></div><div><div data-tex="X=(x_1,\ldots,x_n),\quad x_i\in\mathbb R^d"></div><div data-tex="\widehat{\mathcal S}\in\arg\min_{\mathcal S\in\mathcal P_K}Q(X,\mathcal S)" data-display=""></div><p class="math-key">℘<sub>K</sub> — разбиения {1, …, n} на K непустых групп.<br>Q — выбранная мера ошибки разбиения.</p></div></div>
+<div class="ml-row"><div><h3>С подкреплением</h3><p>Агент действует в среде<br>и получает награды.</p><p class="secondary">Пример: управление роботом.</p></div><div><div data-tex="a_t\sim\pi(\cdot\mid s_t),\quad s_{t+1}\sim P(\cdot\mid s_t,a_t)"></div><div data-tex="\pi^*\in\arg\max_{\pi\in\Pi}\;\mathbb E_{\rho_0,P,\pi}\!\left[\sum_{t=0}^{T-1}\gamma^t r_t\right]" data-display=""></div><p class="math-key">s — состояние, a — действие, r — награда, π — стратегия.<br>ρ₀ — начальные состояния, P — переходы, T — число шагов.<br>Π — класс стратегий; 0 &lt; γ ≤ 1 — коэффициент дисконтирования.</p></div></div>
+</div>
+<aside class="notes">
+<p>Первая формула — минимизация эмпирического риска (без регуляризации): D — обучающая выборка, ℱ — допустимый класс моделей. Качество на новых данных оценивается отдельно. Например, ℓ(u,y)=(u−y)² для регрессии, ℓ(u,y)=1[u≠y] для жёсткой классификации. Вторая формула — пример оптимизационной постановки кластеризации при фиксированном K, а не универсальная формула всего обучения без учителя. Критерий Q пока не выбран; позже для k-means им будет сумма квадратов. Не каждый алгоритм явно оптимизирует Q. Третья формула — конечный горизонт из T действий в марковской среде. Ожидание учитывает начальное состояние, случайность переходов и стратегии. Π — допустимые стратегии (в том числе с зависимостью от времени), r_t — награда за действие на шаге t. При γ=1 будущие награды не дисконтируются. Время можно включить в состояние. Источники: Shalev-Shwartz, Ben-David, Understanding Machine Learning, §2.2: https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf RL: https://spinningup.openai.com/en/latest/spinningup/rl_intro.html</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="cluster" class="slide level2">
+<h2>Что такое кластер</h2>
+<p class="lead"><strong>Кластер</strong> — группа объектов, похожих друг на друга в выбранном смысле.</p>
+<div class="two-columns cluster-examples"><div><h3>Близость к общему центру</h3><svg id="cluster-compact" viewbox="0 0 530 280" aria-label="Компактные группы точек"></svg><p>Точки кластера находятся<br>недалеко от одного центра.</p></div><div><h3>Связность через соседей</h3><svg id="cluster-connected" viewbox="0 0 530 280" aria-label="Две кольцевые группы точек"></svg><p>Точки образуют плотную связную область.<br>При этом не все её точки близки друг к другу.</p></div></div>
+<aside class="notes">
+<p>Левый рисунок иллюстрирует модель компактного кластера, правый — связность через цепочку соседей. У кольца противоположные точки далеки, но принадлежат одной связной области. Поэтому определение через «все попарные расстояния малы» не подходит для всех методов. Оба примера синтетические.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="problem" class="slide level2">
+<h2>Постановка задачи кластеризации</h2>
+<div class="definition-layout"><div>
+<p><strong>Дано:</strong> n объектов, описанных d признаками.</p>
+<div class="math-block" data-tex="X=(x_1,\ldots,x_n),\qquad x_i\in\mathbb R^d" data-display=""></div>
+<p><strong>Найти:</strong> разбиение индексов объектов на непустые группы.</p>
+<div class="math-block" data-tex="\bigcup_{k=1}^{K}S_k=\{1,\ldots,n\},\quad S_j\cap S_k=\varnothing\;(j\ne k)" data-display=""></div>
+<p>Метка <span data-tex="a_i=k"></span> означает, что <span data-tex="i\in S_k"></span>.</p>
+<p class="secondary">Какие объекты считать похожими, задают признаки,<br>расстояние и критерий конкретного метода.</p>
+</div><div class="plot-panel"><svg id="output-points" viewbox="0 0 530 310" aria-label="Три группы объектов"></svg><p class="caption">Один цвет — один кластер.<br>Номера кластеров не несут смысла.</p></div></div>
+<p class="footnote">Здесь рассматриваем жёсткое разбиение. Позже разрешим алгоритму помечать часть объектов как шум.</p>
+<aside class="notes">
+<p>Множества S содержат индексы, поэтому совпадающие по координатам объекты остаются разными элементами выборки. K в этой постановке может быть задан или найден методом. Источник терминологии: https://en.wikipedia.org/wiki/Cluster_analysis#Definition</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="why-clustering" class="slide level2">
+<h2>Зачем нужна кластеризация</h2>
+<p class="main-idea">Кластеризация помогает обнаружить структуру данных, о которой мы заранее не знаем.</p>
+<p class="idea-detail">Группы — способ увидеть эту структуру:<br>типы клеток, потребности пользователей, похожие изображения.</p>
+<aside class="notes">
+<p>Разбиение само по себе — ещё не результат исследования. Мы ищем закономерности, которые помогут понять данные или решить прикладную задачу. Кластеризация может как открыть неизвестную структуру, так и уточнить уже имеющуюся гипотезу.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="applications" class="slide level2">
+<h2>Пример 1: атлас клеток переднего мозга мыши</h2>
+<div class="application-layout atlas-layout">
+<figure class="application-image"><img src="assets/mouse-forebrain-umap.png" alt="UMAP-визуализация клеток переднего мозга мыши: 28 подписанных популяций"><figcaption>Источник: <a href="https://bensimonslab.github.io/mouse-forebrain-atlas/figure1.html#cluster-annotation" target="_blank" rel="noopener">Ben Simons Lab · Mouse forebrain atlas</a></figcaption></figure>
+<div class="application-text"><p><strong>Точка — отдельная клетка.</strong><br>Признаки — активность тысяч генов.</p><p>Клетки с похожими профилями объединяют в группы и определяют их биологический смысл.</p><p><strong>Цвет — популяция клеток.</strong><br>Например, микроглия или олигодендроциты.</p><p class="secondary">UMAP переносит данные на плоскость для визуализации. Группы здесь найдены методом Leiden.</p></div>
+</div>
+<aside class="notes">
+<p>Атлас клеток переднего мозга мыши из Ben Simons Lab. На рисунке 28 аннотированных популяций. Источник изображения и кода анализа: https://bensimonslab.github.io/mouse-forebrain-atlas/figure1.html#cluster-annotation Исходное изображение: https://bensimonslab.github.io/mouse-forebrain-atlas/figure/figure1.Rmd/unnamed-chunk-13-1.png Цвета — аннотации кластеров Leiden; UMAP используется для визуализации. Биологические названия присваивают после анализа маркеров, а не получают автоматически из номера кластера. Оси UMAP не являются отдельными генами; расстояния на рисунке не воспроизводят все расстояния в исходных данных.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="applications-search" class="slide level2">
+<h2>Пример 2: группы поисковых запросов</h2>
+<p class="lead">Разные формулировки могут выражать похожую потребность.</p>
+
+<table class="query-groups caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Запросы</th>
+<th data-quarto-table-cell-role="th">Как можно назвать группу</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>«как сварить рис»<br>
+«сколько варить гречку»<br>
+«как приготовить булгур»</td>
+<td>Приготовление еды</td>
+</tr>
+<tr class="even">
+<td>«билеты москва казань»<br>
+«поезд до казани»<br>
+«купить билет на самолёт»</td>
+<td>Покупка билетов</td>
+</tr>
+<tr class="odd">
+<td>«не включается ноутбук»<br>
+«ноутбук не заряжается»<br>
+«чёрный экран при включении ноутбука»</td>
+<td>Проблемы с ноутбуком</td>
+</tr>
+</tbody>
+</table>
+
+<p class="application-summary"><strong>Объект:</strong> запрос. <strong>Признаки:</strong> векторное представление текста.<br>Группы помогают изучать потребности пользователей и находить темы запросов.</p>
+<p class="footnote">Учебный пример. Названия групп даём после кластеризации; заранее известных меток нет.</p>
+<aside class="notes">
+<p>Запросы и разбиение придуманы для иллюстрации, это не результаты реальной поисковой системы. Текст можно представить числовым вектором, отражающим его содержание — эмбеддингом. Кластеризация объединяет близкие векторы; названия групп интерпретирует человек. Это отличается от классификации запросов по заранее размеченным категориям. При другом уровне детализации билеты на поезд и самолёт могут оказаться в разных группах.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="applications-annotation" class="slide level2">
+<h2>Пример 3: разметка изображений еды</h2>
+<div class="application-layout annotation-layout">
+<div class="application-text"><p><strong>Задача:</strong> разметить изображения еды.</p><p>Представляем изображения векторами признаков и собираем похожие в группы.</p><p>Человек просматривает группу, задаёт общую метку и исключает неподходящие изображения.</p><p class="secondary">Кластеризация предлагает группы.<br>Итоговую разметку проверяет человек.</p></div>
+<figure class="application-image"><a class="annotation-photo" href="assets/food-annotation.jpg" target="_blank" rel="noopener" aria-label="Открыть исходную фотографию интерфейса разметки"><img src="assets/food-annotation.jpg" alt="Интерфейс разметки еды: человек отмечает правильные изображения для метки «сосиска отварная» и исключает неподходящее блюдо"></a><figcaption>Из практики преподавателя · разметка изображений еды</figcaption></figure>
+</div>
+<aside class="notes">
+<p>Фотография предоставлена преподавателем. На ней интерфейс проверки изображений, а не визуализация самих кластеров. Описан общий способ применять кластеризацию при разметке; конкретный алгоритм и модель признаков в этом проекте не указаны. Показать неподходящее блюдо в середине правого столбца: группа может содержать ошибки, поэтому автоматическое объединение не заменяет проверку человеком. Фотография на слайде показана с кадрированием; по нажатию открывается оригинал.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="applications-llm" class="slide level2">
+<h2>Пример 4: интерпретируемость языковых моделей</h2>
+<p class="lead">Какие понятия отражаются во внутренних представлениях модели?</p>
+<figure class="conceptx-figure"><img src="assets/conceptx-figure1.png" alt="ConceptX: извлечение представлений из языковой модели, их кластеризация и сопоставление с понятиями человека"><figcaption><a href="https://aclanthology.org/2022.naacl-main.225/">Sajjad et al., 2022 · Analyzing Encoded Concepts in Transformer Language Models · Figure 1</a></figcaption></figure>
+<div class="two-columns llm-explanation"><div><h3>ConceptX: группы представлений</h3><p>Кластеризуем векторы слов в контексте. Затем исследуем, что объединяет слова внутри группы: форму, грамматику или смысл.</p></div><div><h3>Towards Monosemanticity: признаки</h3><p>Разлагаем активации в разреженную комбинацию признаков. Некоторые реагируют на ДНК, юридический текст или HTTP-запросы.</p></div></div>
+<p class="footnote">Во второй работе используется dictionary learning, а не разбиение на кластеры. <a href="https://transformer-circuits.pub/2023/monosemantic-features/index.html">Bricken et al., 2023 · Towards Monosemanticity: Decomposing Language Models With Dictionary Learning</a></p>
+<aside class="notes">
+<p>Общая мотивация — открыть интерпретируемую структуру пространства представлений. ConceptX применяет агломеративную иерархическую кластеризацию контекстных представлений слов из слоёв предобученных трансформеров, включая BERT. Изображение — оригинальная Figure 1 с с. 3083, извлечённая без изменения содержания: https://aclanthology.org/2022.naacl-main.225.pdf Не приписывать рисунок работе Anthropic. Это две разные работы и разные методы. Towards Monosemanticity изучает небольшой однослойный трансформер: разреженный автоэнкодер извлекает более 4000 признаков из активаций слоя с 512 нейронами. Один вектор может включать несколько признаков; это не жёсткая кластеризация. Источник: https://www.anthropic.com/research/towards-monosemanticity-decomposing-language-models-with-dictionary-learning</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="algorithm-families" class="slide level2">
+<h2>Подходы к кластеризации</h2>
+<p class="lead">Методы различаются тем, какую структуру считают кластером.</p>
+
+<table class="concept-table caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Подход</th>
+<th data-quarto-table-cell-role="th">Идея</th>
+<th data-quarto-table-cell-role="th">Примеры</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>По центрам</td>
+<td>Точки близки к общему представителю.</td>
+<td>k-means, k-medoids</td>
+</tr>
+<tr class="even">
+<td>Иерархический</td>
+<td>Группы вложены друг в друга;<br>
+выбираем уровень детализации.</td>
+<td>Агломеративная<br>
+кластеризация</td>
+</tr>
+<tr class="odd">
+<td>По плотности</td>
+<td>Плотные области отделены<br>
+разреженными промежутками.</td>
+<td>DBSCAN, HDBSCAN</td>
+</tr>
+<tr class="even">
+<td>Вероятностный</td>
+<td>Данные порождены смесью<br>
+нескольких распределений.</td>
+<td>Gaussian Mixture Model</td>
+</tr>
+<tr class="odd">
+<td>На графах</td>
+<td>Внутри группы связи сильнее,<br>
+чем между группами.</td>
+<td>Спектральная<br>
+кластеризация, Leiden</td>
+</tr>
+</tbody>
+</table>
+
+<p class="footnote">Это ориентиры, а не непересекающиеся классы. Начнём с k-means, затем сравним с DBSCAN.</p>
+<aside class="notes">
+<p>Не требуется запоминать все названия. Вернуться к иллюстрации «Что такое кластер»: компактные облака и кольца требуют разных представлений о структуре. Иерархия описывает организацию результата и может сочетаться с другими подходами, например, HDBSCAN строит иерархию по плотности. Источник: https://scikit-learn.org/stable/modules/clustering.html#overview-of-clustering-methods</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="kmeans-intro" class="slide level2">
+<h2>K-means: идея</h2>
+<p class="lead">Представляем каждую из K групп одним центром.<br>Ищем такие центры, чтобы точки своих групп были к ним как можно ближе.</p>
+<div class="intro-layout"><div><svg id="intro-centers" viewbox="0 0 610 350" aria-label="Три группы точек и их центры"></svg><p class="caption">● объект &nbsp;&nbsp; ✚ центр кластера &nbsp;&nbsp; K = 3</p></div><div><h3>Старт</h3><p>Задаём число групп K.<br>Выбираем K начальных центров.</p><h3>1. Собрать группы</h3><p>Каждую точку относим к ближайшему центру.</p><h3>2. Передвинуть центры</h3><p>Для каждой группы берём средние координаты её точек — это новый центр.</p></div></div>
+<p class="key-result">Повторяем шаги 1–2, пока группы не перестанут меняться.</p>
+<aside class="notes">
+<p>K задаём заранее, в отличие от некоторых других методов. Центр обычно не совпадает с конкретной точкой данных. В вырожденных случаях часть центров может остаться без точек; правило для пустого кластера будет в псевдокоде. Рисунок схематический, центры на нём вычислены как средние показанных точек.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="kmeans" class="slide level2">
+<h2>K-means: целевая функция</h2>
+<p class="lead"><strong>J — сумма квадратов расстояний от точек до назначенных им центров.</strong></p>
+<div class="objective" data-tex="J(a,c)=\sum_{i=1}^{n}\|x_i-c_{a_i}\|_2^2\;\longrightarrow\;\min_{a,c}" data-display=""></div>
+<div class="objective-grid"><div><h3>Обозначения</h3><p>xᵢ — объект; aᵢ ∈ {1, …, K} — его метка.<br><span data-tex="c_k\in\mathbb R^d"></span> — центр кластера k.<br>Число кластеров K фиксировано.</p><div class="math-block" data-tex="\|x_i-c_k\|_2^2=\sum_{q=1}^{d}(x_{iq}-c_{kq})^2" data-display=""></div></div><div><h3>Почему центр — среднее</h3><p>При фиксированных метках сумму квадратов<br>минимизирует среднее точек кластера.</p><div class="math-block" data-tex="c_k=\frac{1}{|S_k|}\sum_{i\in S_k}x_i" data-display=""></div></div></div>
+<p class="key-result">Назначение ближайшему центру и пересчёт среднего не увеличивают J.<br>Сходимость не гарантирует глобального минимума.</p>
+<aside class="notes">
+<p>Отделить математическую задачу оптимизации от способа её приближённого решения. Квадрат евклидовой нормы — сумма квадратов разностей координат. Для одной группы можно вспомнить среднее арифметическое. Формула центра предполагает непустой S_k. Источник: https://en.wikipedia.org/wiki/K-means_clustering#Description</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="pseudocode" class="slide level2">
+<h2>K-means: псевдокод</h2>
+<div class="pseudo-layout"><div class="pseudocode">
+<div><b>input</b>: X, C, max_iter</div>
+<div><b>for</b> t = 1, …, max_iter:</div>
+<div class="indent comment"># Назначаем точки ближайшим центрам</div>
+<div class="indent"><b>for</b> i = 1, …, n:</div>
+<div class="indent2" data-tex="a_i\leftarrow\arg\min_{k\in\{1,\ldots,K\}}\|x_i-c_k\|_2"></div>
+<div class="indent comment"># Пересчитываем центры кластеров</div>
+<div class="indent"><b>for</b> k = 1, …, K:</div>
+<div class="indent2" data-tex="S_k\leftarrow\{i:a_i=k\}"></div>
+<div class="indent2"><b>if</b> |Sₖ| &gt; 0: <span data-tex="c_k\leftarrow\frac{1}{|S_k|}\sum_{i\in S_k}x_i"></span></div>
+<div class="comment"># Обновляем метки по итоговым центрам</div>
+<div><b>for</b> i = 1, …, n:</div>
+<div class="indent" data-tex="a_i\leftarrow\arg\min_{k\in\{1,\ldots,K\}}\|x_i-c_k\|_2"></div>
+<div><b>output</b>: C, a</div>
+</div><div class="pseudo-notes"><h3>Обозначения</h3><p>X — n объектов.<br>C — K начальных центров.<br>K — число кластеров.<br><code>max_iter</code> — лимит итераций.<br>a = (a₁, …, aₙ) — метки объектов.</p><h3>Assignment step</h3><p>Центры фиксированы.<br>Меняются метки aᵢ.</p><h3>Update step</h3><p>Метки фиксированы.<br>Меняются центры cₖ.</p><hr><p class="secondary">Равные расстояния: выбираем меньший номер центра.<br>Пустой Sₖ: сохраняем прежний cₖ.</p></div></div>
+<p class="source">Адаптация <a href="https://en.wikipedia.org/wiki/Cluster_analysis#Centroid-based_clustering" target="_blank" rel="noopener">Wikipedia · Cluster analysis</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Комментарии переведены; добавлена обработка пустого кластера, уточнён output.</p>
+<aside class="notes">
+<p>Сохранена структура псевдокода из указанной пользователем статьи. Используем n и K вместо P и K, max_iter вместо J, чтобы J оставалось обозначением целевой функции. Слово optimal в output источника убрано: глобальный оптимум не гарантирован. Норма и её квадрат дают одинаковый argmin. Здесь явно указан лимит итераций; на практике можно остановиться раньше, если метки перестали меняться.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="interactive" class="slide level2">
+<h2>K-means: демонстрация алгоритма</h2>
+<iframe class="demo-frame" src="widget.html" title="Анимация Assignment step и Update step с подсветкой псевдокода" loading="eager"></iframe>
+<aside class="notes">
+<p>Сначала assignment: центры неподвижны, точки меняют цвет и связи. Затем update: цвета точек остаются, центры плавно движутся к средним. Линии пунктиром отмечают траектории центров. Каждая точка графика J соответствует завершённому шагу. В анимации допускается досрочная остановка при неизменности меток; псевдокод выше показывает вариант с фиксированным лимитом. Попросить объяснить невозрастание J.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="quality" class="slide level2">
+<h2>Как оценить найденные группы</h2>
+<p class="lead">Алгоритм сошёлся. Значит ли это, что мы нашли полезную структуру?</p>
+<div class="explain-rows">
+<div><h3>Без эталонных меток</h3><p>Проверяем геометрию разбиения: компактность групп и их разделённость.<br>Примеры: сумма квадратов расстояний, силуэт.</p></div>
+<div><h3>Есть эталон для проверки</h3><p>Сравниваем разбиения, учитывая, что номера кластеров произвольны.<br>Пример: Adjusted Rand Index (ARI), основанный на парах объектов.</p></div>
+<div><h3>В прикладной задаче</h3><p>Проверяем интерпретацию и пользу групп, устойчивость к изменениям данных.<br>Например: удобно ли проверять изображения внутри группы?</p></div>
+</div>
+<aside class="notes">
+<p>Внутренние метрики используют только признаки и найденные группы. Внешние требуют эталона, который не использовался как обучающие ответы. Нельзя напрямую сравнивать номера кластеров с номерами классов: перестановка номеров не меняет разбиение. ARI учитывает совместное/раздельное попадание пар объектов и поправку на случайность. ARI=1 для совпадающих разбиений с точностью до перенумерации; около 0 в среднем для случайных разбиений в принятой модели, возможны отрицательные значения. Далее сначала выбираем K без эталона: J, локоть и силуэт. После этого отдельно разбираем сравнение с эталоном через ARI. Источник: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.adjusted_rand_score.html</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="choose-k" class="slide level2">
+<h2>Как выбрать число кластеров</h2>
+<p class="lead">Число K задаём до запуска k-means. Сравним несколько разбиений одних и тех же данных.</p>
+<div class="k-candidates"><div><h3>K = 2</h3><svg id="candidate-k2" viewbox="0 0 380 260" aria-label="Разбиение трёх облаков на два кластера"></svg></div><div><h3>K = 3</h3><svg id="candidate-k3" viewbox="0 0 380 260" aria-label="Разбиение трёх облаков на три кластера"></svg></div><div><h3>K = 4</h3><svg id="candidate-k4" viewbox="0 0 380 260" aria-label="Разбиение трёх облаков на четыре кластера"></svg></div></div>
+<p>Слишком мало групп — объединяем разные объекты.<br>Слишком много — дробим группы на мелкие части.</p>
+<aside class="notes">
+<p>После обзора способов оценки переходим к выбору K без эталонных меток. Сначала используем уже известную J, затем вводим силуэт и сразу показываем его на данных. На рисунках одни и те же три синтетических облака, результаты из lecture-data.js. Число групп определяется целью и детализацией, а не единственной универсальной метрикой. Следующий слайд объясняет, почему непосредственный минимум J не выбирает полезное K.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="inertia-k" class="slide level2">
+<h2>Почему нельзя выбрать K по минимуму J</h2>
+<div class="two-columns lesson-columns"><div>
+<div class="math-block" data-tex="J_K^*=\min_{c_1,\ldots,c_K}\sum_{i=1}^{n}\min_{1\le k\le K}\|x_i-c_k\|_2^2" data-display=""></div>
+<p>Добавление центра не мешает использовать прежние центры.</p>
+<div class="math-block" data-tex="J_{K+1}^*\le J_K^*,\qquad J_n^*=0" data-display=""></div>
+<p>При K = n можно поставить центр в каждую точку — ошибка станет нулевой.</p>
+</div><div><svg id="inertia-chart" class="lesson-chart" viewbox="0 0 570 370" aria-label="Сумма квадратов расстояний в зависимости от числа кластеров"></svg><p class="plot-caption">Синтетические данные: три облака точек.<br>Показаны найденные значения J, а не доказанные минимумы.</p></div></div>
+<aside class="notes">
+<p>Неравенство относится к глобальному минимуму целевой функции, а не к любому запуску алгоритма Ллойда. На практике неудачный старт может нарушить монотонность найденных значений. На графике для каждого K показан лучший из 10 запусков k-means++ на одних данных. Это эвристическая оценка, не доказательство оптимальности. При K=n все точки могут иметь собственные центры, включая совпадающие координаты. Локоть — эвристика выбора масштаба детализации, а не универсальный критерий истины. Источник: https://developers.google.com/machine-learning/clustering/kmeans/evaluate-results</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="elbow" class="slide level2">
+<h2>Метод локтя: цена ещё одного кластера</h2>
+<p class="lead">Сравниваем, насколько уменьшается J при добавлении очередного центра.</p>
+<div class="two-columns lesson-columns"><div><ol class="lesson-steps"><li>Запускаем k-means для K = 1, 2, … на одних и тех же данных.</li><li>Строим график J(K). Сначала дополнительные центры могут давать большой выигрыш.</li><li>Ищем изгиб: после него улучшения становятся значительно меньше.</li></ol></div><div>
+<div class="math-block" data-tex="\Delta_K=J(K-1)-J(K)" data-display=""></div>
+
+<table class="elbow-numbers caption-top">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Переход</th>
+<th data-quarto-table-cell-role="th">Уменьшение J</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1 → 2</td>
+<td>≈ 1025</td>
+</tr>
+<tr class="even">
+<td>2 → 3</td>
+<td>≈ 585</td>
+</tr>
+<tr class="odd">
+<td>3 → 4</td>
+<td>≈ 26</td>
+</tr>
+</tbody>
+</table>
+
+<p>На трёх облаках кандидат — <strong>K = 3</strong>: четвёртый центр уже мало помогает.</p></div></div>
+<p class="key-result">Выраженного локтя может не быть. Выбор K по изгибу графика — эвристика.</p>
+<aside class="notes">
+<p>Числа округлены из графика предыдущего слайда; данные и число запусков одинаковы. J(K) обозначает найденное значение, в отличие от теоретического J*_K. Не выбираем просто самый большой перепад Δ: здесь он между K=1 и K=2, а локоть около K=3, после которого улучшения резко уменьшаются. Источник: https://developers.google.com/machine-learning/clustering/kmeans/evaluate-results</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="inertia-interactive" class="slide level2">
+<h2>Как J меняется с числом кластеров</h2>
+<iframe class="demo-frame k-explorer-frame" src="k-explorer.html?metric=inertia" title="Изменение числа кластеров: разбиение данных и график J(K)" loading="eager"></iframe>
+<aside class="notes">
+<p>Перейти от K=1 к K=8, задержаться на 2, 3 и 4. Спросить, какие точки разделяет добавленный центр. Затем переключить данные на равномерное облако: k-means всё равно строит группы, а J всё равно уменьшается, хотя три естественные группы исчезли. График по оси K показывает разные обученные модели, а не итерации одного запуска. Для каждого K выбран лучший по J из 10 стартов k-means++; данные фиксированы.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="silhouette" class="slide level2">
+<h2>Силуэт: своя группа и ближайшая чужая</h2>
+<div class="silhouette-cloud-layout"><div class="silhouette-definition">
+<p><strong>aᵢ</strong> — среднее расстояние от точки i до остальных точек её кластера.</p>
+<p><strong>bᵢ</strong> — наименьшее из средних расстояний до точек каждого другого кластера.</p>
+<div class="math-block" data-tex="s_i=\frac{b_i-a_i}{\max(a_i,b_i)}" data-display=""></div>
+<div class="math-block" data-tex="S=\frac1n\sum_{i=1}^{n}s_i" data-display=""></div>
+<p class="secondary">S — среднее по всем точкам.<br>Справа — среднее внутри каждого кластера.</p>
+</div><div class="silhouette-cloud-picture">
+<svg id="silhouette-clouds" viewbox="0 0 720 360" role="img" aria-label="Три облака: отдельный компактный кластер с высоким силуэтом, кластер со средним силуэтом и размытое перекрывающееся облако с низким силуэтом"></svg>
+<div class="cloud-scores"><div><h3>A · высокая</h3><strong id="sil-cloud-0"></strong><p>Компактное,<br>далеко от других</p></div><div><h3>B · средняя</h3><strong id="sil-cloud-1"></strong><p>Свои ближе,<br>но рядом чужие</p></div><div><h3>C · низкая</h3><strong id="sil-cloud-2"></strong><p>Размытое,<br>перекрывается с B</p></div></div>
+</div></div>
+<p class="footnote">Цвет — заданный кластер. Для одиночной точки и при aᵢ = bᵢ = 0 принимаем sᵢ = 0. Средний силуэт: 2 ≤ K ≤ n − 1.</p>
+<aside class="notes">
+<p>После J и локтя вводим второй внутренний критерий, который сравнивает расстояния внутри группы и между группами. На следующем слайде сразу проверяем его на тех же разбиениях при разных K. На одном рисунке три заданных кластера по 60 точек. Изолированное компактное облако A имеет средний силуэт около 0.90. У B около 0.55, у C около 0.06. B и C перекрываются; у размытого C средние расстояния до своей и чужой групп часто близки. Подписи показывают среднее s_i внутри каждого облака, не силуэт центра и не общий S. Все значения рассчитаны по изображённым точкам. Важно: b_i — не расстояние до ближайшей чужой точки или центра, а минимум средних расстояний до других кластеров. В a_i сама точка исключается. S — среднее по точкам, поэтому большие кластеры имеют больший вес. Пример a_i=1, b_i=4 даёт s_i=0.75. Формула и область определения: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html Ограничение для невыпуклых кластеров: https://scikit-learn.org/stable/modules/clustering.html#silhouette-coefficient</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="silhouette-interactive" class="slide level2">
+<h2>Силуэтная ширина и число кластеров</h2>
+<iframe class="demo-frame k-explorer-frame" src="k-explorer.html?metric=silhouette" title="Изменение числа кластеров: разбиение данных, средний силуэт и силуэты отдельных точек" loading="eager"></iframe>
+<aside class="notes">
+<p>Сначала сравнить K=2, 3 и 4 на облаках. Цвет точки — кластер; щелчок по точке показывает её a(i), b(i), s(i). Нижняя диаграмма показывает распределение силуэтов по всем точкам; отрицательные значения помечены красным. Затем выбрать кольца: высокое значение геометрической метрики не означает, что найдены именно кольца. При K=1 силуэт не определён — не подменяем его нулём. Здесь рассматриваем разбиения k-means; DBSCAN на этом слайде не запускается.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="ari-pairs" class="slide level2">
+<h2>RI: сравниваем разбиения по парам объектов</h2>
+<p class="lead"><strong>RI — Rand Index (индекс Рэнда):</strong> доля пар, для которых разбиения согласованы.<br>Номера меток могут различаться при одинаковых группах.</p>
+
+<table class="ari-example caption-top">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Объект</th>
+<th data-quarto-table-cell-role="th">1</th>
+<th data-quarto-table-cell-role="th">2</th>
+<th data-quarto-table-cell-role="th">3</th>
+<th data-quarto-table-cell-role="th">4</th>
+<th data-quarto-table-cell-role="th">5</th>
+<th data-quarto-table-cell-role="th">6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Эталон</th>
+<td>A</td>
+<td>A</td>
+<td>A</td>
+<td>B</td>
+<td>B</td>
+<td>B</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Разбиение</th>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td class="pair-mistake">0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+<div class="two-columns lesson-columns"><div><p>Для каждой пары спрашиваем:<br><strong>«Объекты вместе или раздельно?»</strong></p><p>Пара (1, 2): вместе в обоих разбиениях.<br>Пара (1, 5): раздельно в обоих.<br>Пара (1, 4): ответы различаются.</p></div><div><p>Всего <span data-tex="\binom62=15"></span> пар.</p><p>Согласованы 10 пар: 4 «вместе»<br>и 6 «раздельно». Не согласованы 5.</p><div class="math-block" data-tex="\mathrm{RI}=\frac{\text{agreeing pairs}}{\text{all pairs}}=\frac{10}{15}" data-display=""></div></div></div>
+<aside class="notes">
+<p>Перестановка меток 0 и 1 оставит ответ для каждой пары прежним. Пять ошибочных пар — пары с объектом 4: три ложных объединения с 1,2,3 и два ложных разделения с 5,6. Эталон не использовали для обучения — он нужен только для оценки. Источник: https://scikit-learn.org/stable/modules/clustering.html#rand-index</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="ari" class="slide level2">
+<h2>ARI: поправка на случайное совпадение</h2>
+<p class="secondary"><strong>ARI — Adjusted Rand Index:</strong> скорректированный индекс Рэнда.<br><strong>RI — Rand Index:</strong> индекс Рэнда.</p>
+<div class="objective" data-tex="\mathrm{ARI}=\frac{\mathrm{RI}-\mathbb E[\mathrm{RI}]}{1-\mathbb E[\mathrm{RI}]}" data-display=""></div>
+<p class="lead">Случайная модель сохраняет размеры групп в обоих разбиениях.<br>Ниже — одни и те же шесть объектов; меняется только их разбиение.</p>
+<div class="ari-pictures">
+<div><h3>Эталон</h3><svg id="ari-reference" viewbox="0 0 270 190" role="img" aria-label="Эталон: объекты 1, 2, 3 вместе; объекты 4, 5, 6 вместе"></svg><p>Группы A и B</p></div>
+<div><h3>То же разбиение</h3><svg id="ari-match" viewbox="0 0 270 190" role="img" aria-label="Полное совпадение групп с перестановкой цветов, ARI равен единице"></svg><p id="ari-match-score"></p><p class="secondary">Цвета переставлены</p></div>
+<div><h3>Одна ошибка</h3><svg id="ari-partial" viewbox="0 0 270 190" role="img" aria-label="Объект 4 попал в другую группу, ARI около 0.324"></svg><p id="ari-partial-score"></p><p class="secondary">Как на прошлом слайде</p></div>
+<div><h3>Группы перемешаны</h3><svg id="ari-poor" viewbox="0 0 270 190" role="img" aria-label="Оба кластера смешивают эталонные группы, ARI около минус 0.111"></svg><p id="ari-poor-score"></p><p class="secondary">Согласие ниже ожидаемого</p></div>
+</div>
+<p class="ari-interpretation">1 — совпадение групп; около 0 — случайный уровень; отрицательные значения — ниже него.</p>
+<div class="ari-example-formula" data-tex="\text{Одна ошибка:}\quad \mathrm{RI}=\frac{10}{15},\quad \mathbb E[\mathrm{RI}]=\frac{38}{75},\quad \mathrm{ARI}=\frac{12}{37}\approx0.324" data-display=""></div>
+<aside class="notes">
+<p>Завершить блок оценки: теперь умеем сравнивать разбиения с эталоном и без него. Далее разбираем причины неудачных результатов k-means и возможные исправления. В рисунках одни и те же объекты 1–6. Положение фиксировано для удобства сопоставления, ARI не использует координаты. Эталон AAA/BBB. Предсказания: 111/000 (ARI=1), 000/011 (ARI=12/37), 010/101 (ARI=−1/9). Цвет кодирует номер кластера и не обязан совпадать с цветом эталона. Для точного вычисления обозначим T=choose(n,2), A — число пар, совместных в эталоне, B — число пар, совместных в предсказании. Тогда E[RI]=1−(A+B)/T+2AB/T². Здесь T=15, A=6, B=7, поэтому E[RI]=38/75 и ARI=12/37. Поправка предполагает случайные разбиения с фиксированными размерами групп. В вырожденных случаях с нулевым знаменателем (например, оба разбиения состоят из одной группы) для совпадающих разбиений принимаем ARI=1, как в scikit-learn. Источник: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.adjusted_rand_score.html</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="kmeans-limits" class="slide level2">
+<h2>Проблемы k-means</h2>
+<p class="lead">Даже при выбранном K результат зависит от данных и начальных центров.</p>
+<div class="explain-rows">
+<div><h3>Неудачный старт</h3><p>Алгоритм может остановиться в локальном минимуме.<br>Другие начальные центры дают другое разбиение.</p></div>
+<div><h3>Масштаб и выбросы</h3><p>Крупный по масштабу признак доминирует в расстоянии.<br>Далёкие точки сильно влияют на сумму квадратов и среднее.</p></div>
+<div><h3>Неподходящая форма</h3><p>Ближайший центр хорошо описывает компактные группы.<br>Кольца, вытянутые группы и сильная разница плотностей создают проблемы.</p></div>
+</div>
+<aside class="notes">
+<p>Не утверждать, что k-means требует строго равных размеров и дисперсий: это характеристики удобных данных, а не формальные ограничения входа. Источники: https://developers.google.com/machine-learning/clustering/kmeans/advantages-disadvantages https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_assumptions.html</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="kmeans-fixes" class="slide level2">
+<h2>Что можно улучшить</h2>
+<table class="concept-table fixes-table caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Проблема</th>
+<th data-quarto-table-cell-role="th">Что попробовать</th>
+<th data-quarto-table-cell-role="th">Что остаётся</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Начальные центры<br>
+оказались рядом</td>
+<td>Инициализация k-means++:<br>
+распределить центры по данным.</td>
+<td>Глобальный минимум<br>
+не гарантирован.</td>
+</tr>
+<tr class="even">
+<td>Несопоставимые<br>
+масштабы признаков</td>
+<td>Масштабирование, осмысленный<br>
+выбор признаков и их весов.</td>
+<td>Смысл расстояния<br>
+выбираем мы.</td>
+</tr>
+<tr class="odd">
+<td>Ошибки в данных<br>
+и выбросы</td>
+<td>Проверить аномальные значения,<br>
+исправить ошибки измерений.</td>
+<td>Редкие реальные объекты<br>
+нельзя просто считать ошибками.</td>
+</tr>
+<tr class="even">
+<td>Неизвестное K</td>
+<td>Сравнить несколько K<br>
+по метрикам и смыслу групп.</td>
+<td>Единственного правильного K<br>
+может не быть.</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>Повторные запуски с выбором меньшего J при фиксированном K — ещё один практический способ снизить влияние старта, но не гарантия глобального оптимума. Масштабирование не является универсальным исправлением: оно меняет геометрию. Робастное масштабирование также не делает квадратичную функцию устойчивой к выбросам. Источники: https://developers.google.com/machine-learning/clustering/kmeans/advantages-disadvantages https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="kmeans-scale" class="slide level2">
+<h2>K-means: масштаб признаков меняет разбиение</h2>
+<div class="scale-comparison"><div><h3>Исходные координаты</h3><svg id="scale-before" viewbox="0 0 570 350" role="img" aria-label="Два горизонтально вытянутых облака; k-means разрезает каждое на левую и правую части"></svg><p><strong>Разрез поперёк двух облаков.</strong><br>Большой разброс по x₁ доминирует.</p></div><div><h3>После стандартизации</h3><svg id="scale-after" viewbox="0 0 570 350" role="img" aria-label="После стандартизации k-means разделяет верхнее и нижнее облака"></svg><p><strong>Каждое облако — отдельный кластер.</strong><br>По обеим координатам σ = 1.</p></div></div>
+<div class="scale-rule"><span data-tex="z_{iq}=\frac{x_{iq}-\mu_q}{\sigma_q}"></span><span>Для каждого признака вычитаем среднее<br>и делим на стандартное отклонение.</span></div>
+<p class="footnote">Одни и те же точки, K = 2. Пунктир — граница кластеров. Единица длины по обеим осям одинакова.</p>
+<aside class="notes">
+<p>Синтетические данные: два горизонтальных вытянутых облака. Разброс по x₁ намного больше разброса по x₂. В исходных координатах k-means делит точки по горизонтали, разрезая оба облака. После стандартизации по столбцам (ddof=0) k-means выделяет верхнее и нижнее облака. В обоих случаях лучший J из 10 запусков k-means++ с K=2. J между двумя пространствами не сравниваем. Оси внутри каждого рисунка имеют одинаковый масштаб, поэтому вытянутость отражает геометрию данных. Между рисунками общий масштаб камеры меняется, чтобы обе конфигурации были видны. Стандартизация не гарантирует правильные кластеры на произвольных данных.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="kmeans-scale-steps" class="slide level2">
+<h2>K-means до и после стандартизации</h2>
+<iframe class="demo-frame" src="widget.html?mode=scale" title="Пошаговый k-means с кнопкой стандартизации" loading="eager"></iframe>
+<aside class="notes">
+<p>Сначала пройти assignment и update на вытянутых облаках. Затем нажать «Стандартизировать»: координаты преобразуются по формуле предыдущего слайда. Масштаб камеры выбран так, чтобы высота точек на экране не менялась: поэтому видно только сжатие по горизонтали. Единица по обеим осям одинакова. Начальные центры после преобразования — те же объекты. Запускаем k-means заново. Историю J очищаем: значения в исходных и стандартизированных координатах нельзя напрямую сравнивать. Кнопка «Исходный масштаб» возвращает исходные данные.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="kmeans-plusplus" class="slide level2">
+<h2>K-means++: выбор начальных центров</h2>
+<div class="two-columns lesson-columns"><div><ol class="lesson-steps"><li>Первый центр выбираем равновероятно среди точек.</li><li>Для каждой точки считаем расстояние Dᵢ до ближайшего выбранного центра.</li><li>Новый центр выбираем случайно, с вероятностью, пропорциональной Dᵢ².</li><li>Повторяем до K центров, затем запускаем обычный k-means.</li></ol></div><div>
+<div class="math-block" data-tex="D_i=\min_{c\in C}\|x_i-c\|_2" data-display=""></div>
+<div class="math-block" data-tex="P(c_{\mathrm{next}}=x_i)=\frac{D_i^2}{\sum_{j=1}^{n}D_j^2}" data-display=""></div>
+<p class="secondary">C — уже выбранные центры.</p>
+<p>Далёкая от всех центров точка получает больший шанс стать следующим центром.</p>
+</div></div>
+<aside class="notes">
+<p>Это исходный D²-sampling, не greedy-вариант scikit-learn. Не выбираем обязательно самую далёкую точку: вероятность лишь возрастает с квадратом расстояния. Формула предполагает положительный знаменатель. Если все D_i=0, все различные координаты уже представлены центрами: ошибка нулевая, новые центры её не улучшат. Для K не больше числа различных координат вырожденный случай не возникает до завершения инициализации. Можно завершить выбор или добавить дубликаты по соглашению. Источник: Arthur, Vassilvitskii (2007), k-means++: The Advantages of Careful Seeding: https://theory.stanford.edu/~sergei/papers/kMeansPP-soda.pdf</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="kmeans-comparison" class="slide level2">
+<h2>K-means и k-means++: влияние старта</h2>
+<iframe class="demo-frame" src="compare.html" title="Сравнение случайного старта k-means и инициализации k-means++ на одних данных" loading="eager"></iframe>
+<aside class="notes">
+<p>Одинаковые данные, K и первый центр. Слева оставшиеся центры выбираются равномерно без возвращения, справа — по D². Затем обе стороны выполняют одинаковые шаги Ллойда. Шаг 0 — центры после инициализации и ближайшие метки для вычисления J. Ось графика — шаги assignment/update, не время; стоимость инициализации не включена. Если один запуск сошёлся раньше, он останавливается, второй продолжает работать. Менять старты и сравнивать: k-means++ не гарантирует меньше шагов или меньшее J в каждой отдельной паре запусков. Обе стороны используют одну целевую функцию.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="kmeans-geometry" class="slide level2">
+<h2>Что инициализация исправить не может</h2>
+<div class="two-columns comparison-plots"><div><h3>K-means++, K = 2</h3><svg id="rings-kmeans" viewbox="0 0 570 350" aria-label="K-means делит концентрические кольца на части"></svg><p>Точки группируются по близости к центрам.<br>Оба кольца разрезаются на части.</p></div><div><h3>Структура, которую мы хотим найти</h3><svg id="rings-target" viewbox="0 0 570 350" aria-label="Два кольца как отдельные группы и две изолированные точки"></svg><p>Каждое кольцо — своя группа.<br>Изолированные точки можно оставить шумом.</p></div></div>
+<p class="key-result">При K = 2 граница ближайших центров — прямая.<br>Смена начальных центров не позволяет отделить одно кольцо от другого.</p>
+<aside class="notes">
+<p>Данные синтетические, справа показана структура генерации, а не выход алгоритма. Слева — лучший по J из 10 запусков с k-means++. Для двух различных центров равенство квадратов расстояний задаёт гиперплоскость, на плоскости — прямую. При K&gt;2 области Вороного выпуклы. Это свойство границ назначения, а не утверждение о выпуклости конечного набора точек. Стандартное назначение выбирает один центр и для выбросов. Изменение признаков, например добавление расстояния до известного центра колец, может изменить задачу; речь об ограничении k-means в текущем пространстве признаков. Источник: https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_assumptions.html</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="kmeans-shapes-demo" class="slide level2">
+<h2>K-means на кластерах сложной формы</h2>
+<iframe class="demo-frame" src="widget.html?dataset=circles" title="Пошаговый k-means на кольцах и лунах" loading="eager"></iframe>
+<aside class="notes">
+<p>Начать с колец при K=2: даже другой старт не позволяет отделить внутреннее кольцо от внешнего. Затем выбрать луны. Менять старт и число центров, наблюдать границы разбиения. Это ограничение геометрии ближайшего центра, а не только инициализации. После демонстрации перейти к группировке по плотности — DBSCAN.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="dbscan" class="slide level2">
+<h2>DBSCAN: идея</h2>
+<div class="two-columns lesson-columns"><div><svg id="rings-dbscan" class="lesson-chart" viewbox="0 0 570 370" aria-label="DBSCAN находит два кольца и помечает изолированные точки как шум"></svg><p class="plot-caption">Те же точки · ε = 0.55 · min_samples = 5<br>Серый цвет — шум.</p></div><div><p>Ищем плотные области, связанные цепочками соседей.</p><p><strong>ε</strong> задаёт радиус окрестности.<br><strong>min_samples</strong> — сколько точек нужно в ней для достаточной плотности.</p><p>Число кластеров K заранее не задаём.<br>Часть точек может остаться шумом.</p><p class="secondary">Для объединения точек<br>центры кластеров не нужны.</p></div></div>
+<aside class="notes">
+<p>На рисунке действительный результат DBSCAN на тех же кольцах, что выше. При min_samples считаем саму точку, как в scikit-learn. Число групп зависит от ε, min_samples, масштаба и выбранной метрики. Отсутствие параметра K не означает отсутствия настройки или автоматического нахождения «истинного» числа кластеров. Источник: https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="dbscan-points" class="slide level2">
+<h2>DBSCAN: основные, граничные и шумовые точки</h2>
+<p class="lead">ε = 1, min_samples = 5. Считаем все точки в круге, включая его центр.</p>
+<div class="db-point-types">
+<div><h3>Основная · core</h3><svg id="db-core-example" viewbox="0 0 380 270" role="img" aria-label="Основная точка A: шесть точек в её ε-окрестности при пороге пять"></svg><p><strong>A: 6 ≥ 5</strong><br>В окрестности достаточно точек.<br>Через неё кластер растёт.</p></div>
+<div><h3>Граничная · border</h3><svg id="db-border-example" viewbox="0 0 380 270" role="img" aria-label="Граничная точка B: четыре точки в окрестности, рядом есть основная точка A"></svg><p><strong>B: 4 &lt; 5</strong><br>Не основная, но рядом есть<br>основная точка A.</p></div>
+<div><h3>Шумовая · noise</h3><svg id="db-noise-example" viewbox="0 0 380 270" role="img" aria-label="Шумовая точка C: одна точка в окрестности, основных соседей нет"></svg><p><strong>C: 1 &lt; 5</strong><br>Не основная и не соседствует<br>ни с одной основной точкой.</p></div>
+</div>
+<p class="secondary">Основную точку также называют ядровой. Граничная точка входит в кластер, но не расширяет его.</p>
+<aside class="notes">
+<p>Во всех трёх панелях одни и те же семь точек. Меняется только выделенная окрестность. Пять синих точек — основные, оранжевая B — граничная, серый крест C — шум. Координаты: A=(0,0), четыре точки (±0.2,±0.2), B=(0.95,0), C=(2.35,0.25). Евклидово расстояние, ε=1, min_samples=5. Число соседей A=6, B=4, C=1. Сама точка включена в min_samples. Схема построена по этим синтетическим данным. Граничная точка может соседствовать с основными точками разных компонент. Она получает один кластер, выбор может зависеть от порядка обхода. Шум здесь окончательный статус. Предварительная отметка шума может смениться на граничную. Источник: https://scikit-learn.org/stable/modules/clustering.html#dbscan</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="dbscan-demo" class="slide level2">
+<h2>DBSCAN: демонстрация алгоритма</h2>
+<iframe class="demo-frame" src="dbscan.html" title="Пошаговое расширение кластеров DBSCAN и изменение радиуса и порога плотности" loading="eager"></iframe>
+<aside class="notes">
+<p>Сразу после типов точек показать расширение через основные точки и остановку на граничных. Сначала наблюдаем процесс, затем описываем его графом и псевдокодом. Начать с лун, показать окрестность текущей точки и очередь расширения. Один шаг — проверка одной точки. Перейти к результату, уменьшить ε и сравнить долю шума. Проверить кольца, облака и равномерные точки. Изменение данных или параметров сбрасывает обход. Клик по точке показывает её окрестность, не меняя алгоритм. Промежуточная метка шума может смениться на граничную. Сама точка входит в min_samples. Клавиша паузы останавливает автоматический обход; при уходе со слайда обход тоже останавливается.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="dbscan-algorithm" class="slide level2">
+<h2>DBSCAN: как собрать кластеры</h2>
+<ol class="lesson-steps wide-steps"><li>Для каждой точки находим ε-окрестность и определяем, является ли она основной.</li><li>Соединяем соседние основные точки. Каждая связная компонента этого графа — основа кластера.</li><li>Присоединяем остальные точки к соседним основным точкам. Если подходят несколько кластеров, выбираем один по фиксированному правилу.</li><li>Оставшиеся точки объявляем шумом.</li></ol>
+<aside class="notes">
+<p>После демонстрации обобщаем увиденное: основные точки связывают группу, граничные присоединяются, но не соединяют компоненты. Описание через компоненты позволяет сразу отделить ядра от границы и избежать ошибочного правила «любая цепочка соседних точек — кластер». В обычном обходе заранее не вычисляют весь граф: берут непосещённую точку, запрашивают соседей; если она основная, запускают расширение через очередь; добавляют соседей каждой найденной основной точки. Неосновная точка не расширяет очередь. Источник: https://scikit-learn.org/stable/modules/clustering.html#dbscan</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="dbscan-pseudocode" class="slide level2">
+<h2>DBSCAN: псевдокод</h2>
+<div class="pseudo-layout"><div class="pseudocode">
+<div><b>input</b>: X, ε, m</div>
+<div>labels[:] ← UNSEEN; cluster ← 0</div>
+<div><b>for</b> p <b>in</b> X:</div>
+<div class="indent"><b>if</b> labels[p] ≠ UNSEEN: <b>continue</b></div>
+<div class="indent">N ← neighbors(p, ε)</div>
+<div class="indent"><b>if</b> |N| &lt; m:</div>
+<div class="indent2">labels[p] ← NOISE; <b>continue</b></div>
+<div class="indent">cluster ← cluster + 1</div>
+<div class="indent">labels[p] ← cluster</div>
+<div class="indent">Q ← N ∖ {p}</div>
+<div class="indent"><b>while</b> Q ≠ ∅:</div>
+<div class="indent2">q ← pop(Q)</div>
+<div class="indent2"><span class="comment"># Шум может стать граничной точкой</span></div>
+<div class="indent2"><b>if</b> labels[q] = NOISE: labels[q] ← cluster</div>
+<div class="indent2"><b>if</b> labels[q] ≠ UNSEEN: <b>continue</b></div>
+<div class="indent2">labels[q] ← cluster</div>
+<div class="indent2">M ← neighbors(q, ε)</div>
+<div class="indent2"><span class="comment"># Только основные точки расширяют очередь</span></div>
+<div class="indent2"><b>if</b> |M| ≥ m:</div>
+<div class="indent3">Q ← Q ∪ {r ∈ M: labels[r] ∈ {UNSEEN, NOISE}}</div>
+<div><b>output</b>: labels</div>
+</div><div class="pseudo-notes"><h3>Обозначения</h3><p>X — объекты.<br>ε — радиус окрестности.<br>m = <code>min_samples</code> — порог числа соседей.</p><p><code>neighbors(p, ε)</code> — все точки на расстоянии ≤ ε от p, включая саму p.</p><p><code>labels</code> — метки объектов.<br><code>UNSEEN</code> — не проверена.<br><code>NOISE</code> — пока шум.</p><p>Q — очередь без повторов.<br><code>pop(Q)</code> извлекает точку.</p></div></div>
+<aside class="notes">
+<p>Это обход DBSCAN с расширением через очередь. labels заменяет отдельный visited: UNSEEN означает, что точка не обработана, NOISE — обработана и не основная. Если ранее помеченная шумом точка попала в окрестность основной, она получает метку текущего кластера. Затем continue: повторно проверять её плотность не нужно. Метка другого кластера не меняется, поэтому неоднозначная граница достаётся первому найденному кластеру. Q хранит точки без повторов; объединение добавляет ещё не обработанных соседей или временный шум. Порядок извлечения фиксирован. Предполагаем ε&gt;0, целое m≥1. После завершения NOISE обозначает окончательный шум. Источник: https://scikit-learn.org/stable/modules/clustering.html#dbscan</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="dbscan-limits" class="slide level2">
+<h2>DBSCAN тоже требует выбора параметров</h2>
+<div class="explain-rows">
+<div><h3>Слишком маленькое ε</h3><p>Группы распадаются, многие точки объявляются шумом.</p></div>
+<div><h3>Слишком большое ε</h3><p>Плотные области могут соединиться в один кластер.</p></div>
+<div><h3>Разная плотность групп</h3><p>Один радиус может не подойти одновременно для плотной и редкой группы.<br>Для таких задач рассматривают, например, HDBSCAN или OPTICS.</p></div>
+</div>
+<aside class="notes">
+<p>Параметр min_samples также меняет требуемую плотность: при фиксированном ε его увеличение сокращает число основных точек. Масштаб и метрика важны и здесь. Если исключаем шум при вычислении силуэта, отдельно сообщаем долю оставшихся объектов. Нельзя молча считать все шумовые точки единым обычным кластером. Для некомпактных групп силуэт может быть низким даже при содержательно хорошем разбиении. Источник: https://scikit-learn.org/stable/modules/clustering.html#dbscan</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="other-algorithms" class="slide level2">
+<h2>Другие алгоритмы кластеризации</h2>
+<table class="other-algorithms caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Метод и идея</th>
+<th data-quarto-table-cell-role="th">Преимущества</th>
+<th data-quarto-table-cell-role="th">Ограничения</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Агломеративная</strong><br>
+Последовательно объединяет<br>
+ближайшие группы.</td>
+<td>Дерево вложенных групп.<br>
+Можно выбрать уровень среза.</td>
+<td>Результат зависит от правила<br>
+слияния. Затратна при большом n.</td>
+</tr>
+<tr class="even">
+<td><strong>Смесь гауссиан · GMM</strong><br>
+Описывает данные смесью<br>
+нормальных распределений.</td>
+<td>Эллиптические группы.<br>
+Вероятности принадлежности.</td>
+<td>Нужно выбрать число компонент.<br>
+Зависит от старта и допущений<br>
+о форме распределений.</td>
+</tr>
+<tr class="odd">
+<td><strong>Спектральная</strong><br>
+Строит представление<br>
+по спектру графа сходства.</td>
+<td>Может разделять группы<br>
+сложной, невыпуклой формы.</td>
+<td>Нужны K и настройка графа.<br>
+Вычисление спектра затратно<br>
+на больших данных.</td>
+</tr>
+<tr class="even">
+<td><strong>HDBSCAN</strong><br>
+Ищет устойчивые группы<br>
+в иерархии плотности.</td>
+<td>Группы разной плотности.<br>
+Выделяет шум, не требует K.</td>
+<td>Нужны параметры плотности<br>
+и минимального размера группы.<br>
+Малые группы могут стать шумом.</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>После ограничений DBSCAN показываем другие способы определить группы. Далее подробнее показываем иерархию и графовый подход. Краткий обзор, без вывода алгоритмов. Агломеративная кластеризация строит иерархию снизу вверх. Правила linkage дают разные деревья; затраты зависят от реализации и ограничений связности. GMM даёт апостериорные вероятности компонент; эллиптические формы относятся к модели с подходящей ковариацией, например full. Спектральная кластеризация использует собственные векторы лапласиана графа сходства и кластеризацию в новом пространстве. Качество зависит от построения графа. HDBSCAN исследует иерархию плотности и извлекает устойчивые кластеры. Разная плотность не гарантирует успеха на любых данных; важны min_cluster_size, min_samples, расстояние и представление признаков. Источники: https://scikit-learn.org/stable/modules/clustering.html#hierarchical-clustering https://scikit-learn.org/stable/modules/mixture.html https://scikit-learn.org/stable/modules/clustering.html#spectral-clustering https://scikit-learn.org/stable/modules/clustering.html#hdbscan</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="agglomerative-idea" class="slide level2">
+<h2>Агломеративная кластеризация</h2>
+<p class="lead">Сначала каждая точка — отдельная группа. На каждом шаге объединяем две ближайшие группы.</p>
+<div class="structure-panels"><div><h3>Группы на выбранной высоте</h3><svg id="hierarchy-points" viewbox="0 0 570 330" role="img" aria-label="Девять объектов A–I, окрашенных по срезу дендрограммы"></svg></div><div><h3>Дендрограмма — история объединений</h3><svg id="hierarchy-tree" viewbox="0 0 570 330" role="img" aria-label="Дендрограмма: высота ветви равна расстоянию при объединении, пунктир показывает срез"></svg></div></div>
+<div class="structure-controls"><label for="hierarchy-cut">Высота среза</label><input id="hierarchy-cut" type="range" min="0" max="10" step="0.1" value="2.2"><output id="hierarchy-readout" for="hierarchy-cut" aria-live="polite"></output></div>
+<p class="structure-note">Здесь <strong>complete linkage</strong>: расстояние между группами — максимум расстояний между их точками.<br>Меняем высоту среза — получаем разное число кластеров из одного дерева.</p>
+<aside class="notes">
+<p>Рисунок построен по настоящему complete-linkage на девяти синтетических объектах. Названия A–I связывают точки слева с листьями дерева справа. Движение снизу вверх показывает последовательные слияния; высота ветви — расстояние между объединяемыми группами. Красная линия задаёт порог. При высоте 2.2 получаются три группы. Опустить срез к нулю, затем поднять: группы объединяются, пока не останется одна. В complete linkage расстояние — максимальное попарное расстояние между двумя группами. Single linkage берёт минимум; average — среднее. Деревья могут различаться. Это иерархия разбиений, а не автоматический выбор единственного правильного K. Источник: https://scikit-learn.org/stable/modules/clustering.html#hierarchical-clustering</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="graph-clustering" class="slide level2">
+<h2>Графовая кластеризация: разрезаем остовное дерево</h2>
+<p class="lead">Соединяем все точки деревом с минимальной суммой длин рёбер.<br>Удаляем K − 1 самых длинных рёбер. Оставшиеся связные части — кластеры.</p>
+<div class="structure-panels"><div><h3>Минимальное остовное дерево · MST</h3><svg id="mst-before" viewbox="0 0 570 330" role="img" aria-label="Минимальное остовное дерево на двух лунах; удаляемые длинные рёбра отмечены красным пунктиром"></svg></div><div><h3>После удаления рёбер</h3><svg id="mst-after" viewbox="0 0 570 330" role="img" aria-label="Связные компоненты дерева после удаления длинных рёбер окрашены как кластеры"></svg></div></div>
+<div class="structure-controls"><label for="graph-k">Число кластеров</label><input id="graph-k" type="range" min="1" max="5" step="1" value="2"><output id="graph-readout" for="graph-k" aria-live="polite"></output></div>
+<p class="structure-note">Группы могут изгибаться: важны связи между соседями, а не расстояние до центра.<br>Недостаток: цепочка близких точек может соединить разные группы.</p>
+<aside class="notes">
+<p>MST — Minimum Spanning Tree, минимальное остовное дерево. Рассматриваем полный неориентированный граф: вершины — объекты, веса рёбер — евклидовы расстояния. Остов соединяет все n вершин без циклов и содержит n−1 ребро. Минимальный остов имеет наименьшую сумму весов. На рисунке 60 точек, дерево действительно вычислено алгоритмом Прима; удаляются самые длинные рёбра этого дерева, не полного графа. Сравнить K=1, 2, 3: сначала две луны соединены, затем разъединены, далее одна дробится. Для дерева удаление K−1 рёбер даёт ровно K компонент. При равных длинах нужен фиксированный порядок. Этот метод связан с single-linkage, а не с complete-linkage на прошлом слайде. Это один из графовых подходов; спектральная кластеризация работает иначе — использует спектр лапласиана графа сходства. Пример иллюстрирует метод; большие промежутки внутри групп и цепочки между группами могут привести к нежелательным разбиениям. Источники: https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csgraph.minimum_spanning_tree.html https://scikit-learn.org/stable/modules/clustering.html#hierarchical-clustering</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="takeaways" class="slide level2">
+<h2>Итоги: что мы обсудили</h2>
+<div class="explain-rows"><div><h3>Постановка</h3><p>Ищем структуру без заранее заданных ответов.<br>Признаки, расстояние и масштаб определяют понятие сходства.</p></div><div><h3>Алгоритмы</h3><p>K-means уменьшает J, чередуя назначение и пересчёт центров.<br>K-means++ улучшает старт. DBSCAN ищет плотные связные области.</p></div><div><h3>Проверка результата</h3><p>Локоть и силуэт помогают выбирать детализацию; ARI сравнивает с эталоном.<br>Смысл групп, устойчивость и пользу для задачи проверяем отдельно.</p></div></div>
+</section>
+<section id="final-motivation" class="slide level2">
+<h2>От групп — к пониманию данных</h2>
+<p class="main-idea">Найденная группа — гипотеза<br>о том, как устроены данные.</p>
+<p class="idea-detail">Она может подсказать тип клетки, потребность пользователя,<br>способ ускорить разметку или понятие в представлениях языковой модели.</p>
+<p class="footnote">На семинаре реализуем k-means и исследуем его поведение. DBSCAN — задача со звёздочкой.</p>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="lecture_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="lecture_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="lecture_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="lecture_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="lecture_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="lecture_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="lecture_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="lecture_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="lecture_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 5.5e-2,
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Скопировано");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Скопировано");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    <script src="vendor/d3.v7.min.js"></script>
+    <script src="vendor/katex/katex.min.js"></script>
+    <script src="math.js"></script>
+    <script src="vendor/engine.js"></script>
+    <script src="visuals.js"></script>
+    <script src="lecture-data.js"></script>
+    <script src="lecture-plots.js"></script>
+    <script src="slide-demos.js"></script>
+    <script src="explanation-data.js"></script>
+    <script src="scale-scene.js"></script>
+    <script src="explanation-plots.js"></script>
+    <script src="structure-models.js"></script>
+    <script src="structure-plots.js"></script>
+    
+
+</body></html>

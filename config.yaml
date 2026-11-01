@@ -49,29 +49,13 @@ languages:
     params:
       homeInfoParams:
         Title: "Hi there 👋"
-        Content: "Welcome to my blog about ML, DeFi, travel, and genealogy research."
+        Content: ""
     menu:
       main:
         - identifier: home
           name: "Home"
           url: /
           weight: 1
-        - identifier: writings
-          name: "Writings"
-          url: /writings/
-          weight: 2
-        - identifier: works
-          name: "Works"
-          url: /works/
-          weight: 3
-        - identifier: travel
-          name: "Travel"
-          url: /travel/
-          weight: 4
-        - identifier: gallery
-          name: "Gallery"
-          url: /gallery/
-          weight: 5
   ru:
     languageName: "Русский"
     weight: 2
@@ -79,29 +63,13 @@ languages:
     params:
       homeInfoParams:
         Title: "Привет 👋"
-        Content: "Добро пожаловать в мой блог"
+        Content: ""
     menu:
       main:
         - identifier: home
           name: "Главная"
           url: /
           weight: 1
-        - identifier: writings
-          name: "Записи"
-          url: /writings/
-          weight: 2
-        - identifier: works
-          name: "Работы"
-          url: /works/
-          weight: 3
-        - identifier: travel
-          name: "Путешествия"
-          url: /travel/
-          weight: 4
-        - identifier: gallery
-          name: "Галерея"
-          url: /gallery/
-          weight: 5
 
 # Search / outputs
 outputs:

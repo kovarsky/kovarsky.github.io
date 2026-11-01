@@ -43,3 +43,8 @@
 
 /* Shared layout for hierarchy and graph explanations. */
 .structure-panels{display:grid;grid-template-columns:1fr 1fr;gap:36px}.reveal .structure-panels h3{font-size:23px;margin:0 0 8px}.structure-panels svg{display:block;width:100%;height:330px;background:#fafbfc;border:1px solid var(--line);border-radius:8px}.structure-panels svg text{font-size:18px}.structure-panels .tick text{font-size:15px}.structure-controls{display:flex;gap:20px;align-items:center;margin:18px 0;font-size:21px}.structure-controls input{width:300px;accent-color:#339cff}.structure-controls output{font-variant-numeric:tabular-nums;color:#1679ca}.reveal .structure-note{font-size:21px;line-height:1.45;margin:12px 0}.reveal #agglomerative-idea h2,.reveal #graph-clustering h2{font-size:37px}.reveal #agglomerative-idea .lead,.reveal #graph-clustering .lead{font-size:24px;margin-bottom:20px}
+
+/* Keep the ARI definitions and formula on one row so the worked example fits. */
+.ari-header{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;margin-bottom:18px}
+.reveal #ari .ari-header .secondary{font-size:21px;margin:0}
+.reveal #ari .ari-header .objective{margin:0}

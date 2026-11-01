@@ -36,7 +36,7 @@
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="lecture_files/libs/revealjs/dist/theme/quarto-0427d8d92a431aa6a6430e53ec02a470.css">
-  <link rel="stylesheet" href="styles.css?v=228beb88bf">
+  <link rel="stylesheet" href="styles.css?v=de81df7369">
   <link href="lecture_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="lecture_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="lecture_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -455,21 +455,27 @@
 </section>
 <section id="pseudocode" class="slide level2">
 <h2>K-means: псевдокод</h2>
-<div class="pseudo-layout simple-pseudo"><div class="pseudocode">
-<div><b>input</b>: X, K, max_iter</div>
-<div>C ← initialize(X, K)</div>
+<div class="pseudo-layout"><div class="pseudo-code-column"><div class="pseudocode">
+<div><b>input</b>: X, C, max_iter</div>
+<div>a[:] ← UNASSIGNED</div>
 <div><b>for</b> t = 1, …, max_iter:</div>
+<div class="indent">a_prev ← copy(a)</div>
 <div class="indent comment"># Назначаем точки ближайшим центрам</div>
-<div class="indent">a ← assign_to_nearest(X, C)</div>
-<div class="indent"><b>if</b> labels did not change: <b>break</b></div>
-<div class="indent comment"># Центр каждой группы — среднее её точек</div>
-<div class="indent">C ← cluster_means(X, a)</div>
-<div>a ← assign_to_nearest(X, C)</div>
+<div class="indent"><b>for</b> i = 1, …, n:</div>
+<div class="indent2" data-tex="a_i\leftarrow\arg\min_{k\in\{1,\ldots,K\}}\|x_i-c_k\|_2"></div>
+<div class="indent"><b>if</b> a = a_prev: <b>break</b></div>
+<div class="indent comment"># Пересчитываем центры кластеров</div>
+<div class="indent"><b>for</b> k = 1, …, K:</div>
+<div class="indent2" data-tex="S_k\leftarrow\{i:a_i=k\}"></div>
+<div class="indent2"><b>if</b> |Sₖ| &gt; 0: <span data-tex="c_k\leftarrow\frac{1}{|S_k|}\sum_{i\in S_k}x_i"></span></div>
+<div class="comment"># Обновляем метки по итоговым центрам</div>
+<div><b>for</b> i = 1, …, n:</div>
+<div class="indent" data-tex="a_i\leftarrow\arg\min_{k\in\{1,\ldots,K\}}\|x_i-c_k\|_2"></div>
 <div><b>output</b>: C, a</div>
-</div><div class="pseudo-notes"><h3>Обозначения</h3><p>X — данные.<br>K — число кластеров.<br><code>max_iter</code> — лимит итераций.<br>C — центры, a — метки точек.</p><h3>Остановка</h3><p>Метки перестали меняться<br>или достигнут лимит итераций.</p><p class="secondary">Последнее назначение согласует метки с итоговыми центрами.</p></div></div>
-<p class="source">Упрощённая адаптация <a href="https://en.wikipedia.org/wiki/Cluster_analysis#Centroid-based_clustering" target="_blank" rel="noopener">Wikipedia · Cluster analysis</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.</p>
+</div><p class="pseudo-edge-cases">Равные расстояния: выбираем меньший номер центра.<br>Пустой Sₖ: сохраняем прежний cₖ.</p></div><div class="pseudo-notes"><h3>Обозначения</h3><p>X — n объектов.<br>C — K начальных центров.<br>K — число кластеров.<br><code>max_iter</code> — лимит итераций.<br>a = (a₁, …, aₙ) — метки объектов.<br>a_prev — метки до назначения.<br><code>UNASSIGNED</code> — метки ещё нет.</p><h3>Assignment step</h3><p>Центры фиксированы.<br>Меняются метки aᵢ.</p><h3>Update step</h3><p>Метки фиксированы.<br>Меняются центры cₖ.</p></div></div>
+<p class="source">Адаптация <a href="https://en.wikipedia.org/wiki/Cluster_analysis#Centroid-based_clustering" target="_blank" rel="noopener">Wikipedia · Cluster analysis</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Комментарии переведены; добавлены досрочная остановка и обработка пустого кластера, уточнён output.</p>
 <aside class="notes">
-<p>Показана схема алгоритма без деталей реализации. initialize выбирает K начальных центров; assign_to_nearest возвращает метку ближайшего центра для каждой точки; cluster_means вычисляет среднее каждой группы. X содержит n объектов, C — K центров. Проверка неизменности меток начинается со второй итерации. Сравниваем с копией меток предыдущей итерации. Если метки прежние, центры уже равны средним этих групп. Для пустой группы сохраняем прежний центр. При равенстве расстояний выбираем меньший номер центра. Итоговое назначение нужно при остановке по max_iter: последний пересчёт мог изменить ближайшие центры. Глобальный минимум не гарантирован.</p>
+<p>Сохранена структура псевдокода из указанной пользователем статьи. Используем n и K вместо P и K, max_iter вместо J, чтобы J оставалось обозначением целевой функции. Слово optimal в output источника убрано: глобальный оптимум не гарантирован. Норма и её квадрат дают одинаковый argmin. copy(a) сохраняет копию меток. При неизменных метках выходим до пересчёта: центры уже равны средним этих групп после предыдущей итерации. Иначе выполняем update. Есть общий лимит max_iter.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1025,21 +1031,31 @@
 </section>
 <section id="dbscan-pseudocode" class="slide level2">
 <h2>DBSCAN: псевдокод</h2>
-<div class="pseudo-layout simple-pseudo"><div class="pseudocode">
+<div class="pseudo-layout"><div class="pseudocode">
 <div><b>input</b>: X, ε, m</div>
+<div>labels[:] ← UNSEEN; cluster ← 0</div>
 <div><b>for</b> p <b>in</b> X:</div>
-<div class="indent">N[p] ← neighbors(p, ε)</div>
-<div>core ← {p ∈ X: |N[p]| ≥ m}</div>
-<div class="comment"># Соединяем соседние основные точки</div>
-<div>clusters ← components(core, ε)</div>
-<div><b>for</b> p <b>in</b> X ∖ core:</div>
-<div class="indent"><b>if</b> N[p] ∩ core ≠ ∅:</div>
-<div class="indent2">assign p to a core neighbor's cluster</div>
-<div class="indent"><b>else</b>: mark p as NOISE</div>
-<div><b>output</b>: clusters, noise points</div>
-</div><div class="pseudo-notes"><h3>Обозначения</h3><p>ε — радиус окрестности.<br>m = <code>min_samples</code>.<br>N[p] — соседи, включая саму p.</p><h3>Как собираем группы</h3><p><code>components</code> находит связные группы основных точек. Соседи находятся на расстоянии ≤ ε.</p><p>Граничные точки присоединяем,<br>но группы через них не соединяем.</p></div></div>
+<div class="indent"><b>if</b> labels[p] ≠ UNSEEN: <b>continue</b></div>
+<div class="indent">N ← neighbors(p, ε)</div>
+<div class="indent"><b>if</b> |N| &lt; m:</div>
+<div class="indent2">labels[p] ← NOISE; <b>continue</b></div>
+<div class="indent">cluster ← cluster + 1</div>
+<div class="indent">labels[p] ← cluster</div>
+<div class="indent">Q ← N ∖ {p}</div>
+<div class="indent"><b>while</b> Q ≠ ∅:</div>
+<div class="indent2">q ← pop(Q)</div>
+<div class="indent2"><span class="comment"># Шум может стать граничной точкой</span></div>
+<div class="indent2"><b>if</b> labels[q] = NOISE: labels[q] ← cluster</div>
+<div class="indent2"><b>if</b> labels[q] ≠ UNSEEN: <b>continue</b></div>
+<div class="indent2">labels[q] ← cluster</div>
+<div class="indent2">M ← neighbors(q, ε)</div>
+<div class="indent2"><span class="comment"># Только основные точки расширяют очередь</span></div>
+<div class="indent2"><b>if</b> |M| ≥ m:</div>
+<div class="indent3">Q ← Q ∪ {r ∈ M: labels[r] ∈ {UNSEEN, NOISE}}</div>
+<div><b>output</b>: labels</div>
+</div><div class="pseudo-notes"><h3>Обозначения</h3><p>X — объекты.<br>ε — радиус окрестности.<br>m = <code>min_samples</code> — порог числа соседей.</p><p><code>neighbors(p, ε)</code> — все точки на расстоянии ≤ ε от p, включая саму p.</p><p><code>labels</code> — метки объектов.<br><code>UNSEEN</code> — не проверена.<br><code>NOISE</code> — пока шум.</p><p>Q — очередь без повторов.<br><code>pop(Q)</code> извлекает точку.</p></div></div>
 <aside class="notes">
-<p>Это эквивалентная схема DBSCAN через граф основных точек. Сначала определяем все основные точки; две такие точки соединены ребром, если расстояние между ними ≤ ε. components возвращает связные компоненты этого графа. Затем неосновные точки присоединяем к компонентам основных соседей; при отсутствии такого соседа — шум. Если граничная точка соседствует с несколькими компонентами, выбираем первую по фиксированному порядку. Такой порядок можно согласовать с обходом DBSCAN. В обычной реализации граф не строят целиком: расширяют кластер очередью через основные точки. Предварительная метка шума может смениться на метку кластера. Предполагаем ε&gt;0, целое m≥1; объекты различаем по индексам, даже если координаты совпадают. Источник: https://scikit-learn.org/stable/modules/clustering.html#dbscan</p>
+<p>Это обход DBSCAN с расширением через очередь. labels заменяет отдельный visited: UNSEEN означает, что точка не обработана, NOISE — обработана и не основная. Если ранее помеченная шумом точка попала в окрестность основной, она получает метку текущего кластера. Затем continue: повторно проверять её плотность не нужно. Метка другого кластера не меняется, поэтому неоднозначная граница достаётся первому найденному кластеру. Q хранит точки без повторов; объединение добавляет ещё не обработанных соседей или временный шум. Порядок извлечения фиксирован. Предполагаем ε&gt;0, целое m≥1. После завершения NOISE обозначает окончательный шум. Источник: https://scikit-learn.org/stable/modules/clustering.html#dbscan</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

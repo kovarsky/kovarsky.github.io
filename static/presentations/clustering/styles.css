@@ -48,3 +48,27 @@
 .ari-header{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;margin-bottom:18px}
 .reveal #ari .ari-header .secondary{font-size:21px;margin:0}
 .reveal #ari .ari-header .objective{margin:0}
+
+/* Explanations added during the content review. */
+.reveal #silhouette .silhouette-definition p{margin:8px 0 14px}
+.reveal #silhouette .silhouette-definition .secondary{margin:12px 0}
+.reveal .silhouette-reading p{font-size:19px!important;line-height:1.35;margin:8px 0!important}
+.reveal .silhouette-limit{font-size:21px;line-height:1.35;margin:14px 0 0}
+.reveal #silhouette .footnote{font-size:15px;margin-top:12px}
+.reveal #ari-pairs .ri-transition{font-size:22px;line-height:1.35;margin:0 0 16px}
+.reveal #ari-pairs .lead{font-size:23px;margin-bottom:18px}
+.reveal .ari-expectation{font-size:21px;line-height:1.4;margin:12px 0 18px}
+.reveal .scale-caveat{font-size:21px;line-height:1.35;margin:16px 0 0}
+.reveal #dbscan-limits .explain-rows>div{padding:17px 0}
+.reveal #dbscan-limits .explain-rows p{font-size:24px}
+.reveal .dbscan-noise-note{font-size:22px;margin-top:23px}
+.reveal .other-algorithms td{padding-top:15px;padding-bottom:15px}
+.reveal .methods-transition{font-size:22px;line-height:1.4;margin:20px 0 0}
+#graph-clustering .structure-panels svg{height:270px}
+.reveal .mst-linkage{font-size:20px;line-height:1.35;color:var(--muted);margin:12px 0 0}
+.silhouette-formulas{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.reveal .silhouette-formulas .math-block{font-size:22px}
+.reveal .pseudo-edge-cases{font-size:20px;line-height:1.4;margin:16px 0 0}
+.reveal #applications-llm .conceptx-figure img{height:240px}
+#kmeans-scale .scale-comparison svg{height:300px}
+.reveal #other-algorithms .other-algorithms td{font-size:22px;line-height:1.25;padding-top:11px;padding-bottom:11px}

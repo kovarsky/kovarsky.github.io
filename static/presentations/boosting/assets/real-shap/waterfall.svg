@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="792pt" height="482.4pt" viewBox="0 0 792 482.4" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-04T02:13:12.335533</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 482.4 
+L 792 482.4 
+L 792 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 221.76 410.04 
+L 696.96 410.04 
+L 696.96 86.832 
+L 221.76 86.832 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 221.76 101.523273 
+L 624.471864 101.523273 
+L 624.471864 121.314625 
+L 221.76 121.314625 
+z
+" clip-path="url(#p3141c5c7ab)" style="fill: #8b98a4"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 426.516216 131.971506 
+L 624.471864 131.971506 
+L 624.471864 151.762858 
+L 426.516216 151.762858 
+z
+" clip-path="url(#p3141c5c7ab)" style="fill: #267fd0"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 426.516216 162.41974 
+L 497.263519 162.41974 
+L 497.263519 182.211092 
+L 426.516216 182.211092 
+z
+" clip-path="url(#p3141c5c7ab)" style="fill: #e43c69"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 445.259651 192.867974 
+L 497.263519 192.867974 
+L 497.263519 212.659325 
+L 445.259651 212.659325 
+z
+" clip-path="url(#p3141c5c7ab)" style="fill: #267fd0"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 445.259651 223.316207 
+L 473.562955 223.316207 
+L 473.562955 243.107559 
+L 445.259651 243.107559 
+z
+" clip-path="url(#p3141c5c7ab)" style="fill: #e43c69"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 462.711189 253.764441 
+L 473.562955 253.764441 
+L 473.562955 273.555793 
+L 462.711189 273.555793 
+z
+" clip-path="url(#p3141c5c7ab)" style="fill: #267fd0"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 462.711189 284.212675 
+L 471.922048 284.212675 
+L 471.922048 304.004026 
+L 462.711189 304.004026 
+z
+" clip-path="url(#p3141c5c7ab)" style="fill: #e43c69"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 471.922048 314.660908 
+L 476.812895 314.660908 
+L 476.812895 334.45226 
+L 471.922048 334.45226 
+z
+" clip-path="url(#p3141c5c7ab)" style="fill: #e43c69"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 476.812895 345.109142 
+L 478.527491 345.109142 
+L 478.527491 364.900494 
+L 476.812895 364.900494 
+z
+" clip-path="url(#p3141c5c7ab)" style="fill: #e43c69"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 221.76 375.557375 
+L 478.527491 375.557375 
+L 478.527491 395.348727 
+L 221.76 395.348727 
+z
+" clip-path="url(#p3141c5c7ab)" style="fill: #217d68"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="m244246fa3f" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m244246fa3f" x="221.76" y="410.04" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle" x="221.76" y="426.157188" transform="rotate(-0 221.76 426.157188)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#m244246fa3f" x="310.029238" y="410.04" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle" x="310.029238" y="426.157188" transform="rotate(-0 310.029238 426.157188)">1000</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#m244246fa3f" x="398.298476" y="410.04" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle" x="398.298476" y="426.157188" transform="rotate(-0 398.298476 426.157188)">2000</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m244246fa3f" x="486.567714" y="410.04" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle" x="486.567714" y="426.157188" transform="rotate(-0 486.567714 426.157188)">3000</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <g>
+       <use xlink:href="#m244246fa3f" x="574.836951" y="410.04" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle" x="574.836951" y="426.157188" transform="rotate(-0 574.836951 426.157188)">4000</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m244246fa3f" x="663.106189" y="410.04" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle" x="663.106189" y="426.157188" transform="rotate(-0 663.106189 426.157188)">5000</text>
+     </g>
+    </g>
+    <g id="text_7">
+     <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle" x="459.36" y="442.157188" transform="rotate(-0 459.36 442.157188)">Поездок за день</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_7">
+      <defs>
+       <path id="m5e59cdaa8c" d="M 0 0 
+L -3.5 0 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m5e59cdaa8c" x="221.76" y="111.418949" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="214.76" y="115.217777" transform="rotate(-0 214.76 115.217777)">База</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m5e59cdaa8c" x="221.76" y="141.867182" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="214.76" y="145.66601" transform="rotate(-0 214.76 145.66601)">Температура = 0.11</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_9">
+      <g>
+       <use xlink:href="#m5e59cdaa8c" x="221.76" y="172.315416" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="214.76" y="176.114244" transform="rotate(-0 214.76 176.114244)">Год = 2012</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#m5e59cdaa8c" x="221.76" y="202.76365" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="214.76" y="206.562478" transform="rotate(-0 214.76 206.562478)">Месяц = 1</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_11">
+      <g>
+       <use xlink:href="#m5e59cdaa8c" x="221.76" y="233.211883" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="214.76" y="237.010711" transform="rotate(-0 214.76 237.010711)">Влажность, % = 41.46</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#m5e59cdaa8c" x="221.76" y="263.660117" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_13">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="214.76" y="267.544492" transform="rotate(-0 214.76 267.544492)">Туман / облачность = да</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_13">
+      <g>
+       <use xlink:href="#m5e59cdaa8c" x="221.76" y="294.10835" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_14">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="214.76" y="297.992725" transform="rotate(-0 214.76 297.992725)">Рабочий день = да</text>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#m5e59cdaa8c" x="221.76" y="324.556584" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_15">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="214.76" y="328.355412" transform="rotate(-0 214.76 328.355412)">Скорость ветра = 0.18</text>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_15">
+      <g>
+       <use xlink:href="#m5e59cdaa8c" x="221.76" y="355.004818" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_16">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="214.76" y="358.803646" transform="rotate(-0 214.76 358.803646)">Дождь / снег = нет</text>
+     </g>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#m5e59cdaa8c" x="221.76" y="385.453051" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_17">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="214.76" y="389.251879" transform="rotate(-0 214.76 389.251879)">Прогноз</text>
+     </g>
+    </g>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start" x="629.768019" y="114.276371" transform="rotate(-0 629.768019 114.276371)">4562</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start" x="629.768019" y="144.724604" transform="rotate(-0 629.768019 144.724604)">-2243</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start" x="502.559673" y="175.172838" transform="rotate(-0 502.559673 175.172838)">+801</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start" x="502.559673" y="205.621071" transform="rotate(-0 502.559673 205.621071)">-589</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start" x="478.859109" y="236.069305" transform="rotate(-0 478.859109 236.069305)">+321</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start" x="478.859109" y="266.517539" transform="rotate(-0 478.859109 266.517539)">-123</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start" x="477.218203" y="296.965772" transform="rotate(-0 477.218203 296.965772)">+104</text>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start" x="482.109049" y="327.414006" transform="rotate(-0 482.109049 327.414006)">+55</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start" x="483.823645" y="357.86224" transform="rotate(-0 483.823645 357.86224)">+19</text>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start" x="483.823645" y="388.310473" transform="rotate(-0 483.823645 388.310473)">2909</text>
+   </g>
+  </g>
+  <g id="text_28">
+   <text style="font-size: 19px; font-family: 'DejaVu Sans'; text-anchor: start" x="39.6" y="33.731547" transform="rotate(-0 39.6 33.731547)">Один день: 2012-01-04</text>
+  </g>
+  <g id="text_29">
+   <text style="font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: start" x="39.6" y="53.064" transform="rotate(-0 39.6 53.064)">База 4562 + вклады -1653 = прогноз 2909; факт: 2368</text>
+  </g>
+  <g id="text_30">
+   <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #66707c" x="39.6" y="465.516" transform="rotate(-0 39.6 465.516)">Красный вклад повышает прогноз, синий понижает. Это объяснение предсказания, не его ошибки. Числа округлены.</text>
+  </g>
+  <g id="text_31">
+   <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #66707c" x="39.6" y="476.6112" transform="rotate(-0 39.6 476.6112)">Температура и скорость ветра показаны в нормированных индексах 0–1. Источник: UCI Bike Sharing.</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p3141c5c7ab">
+   <rect x="221.76" y="86.832" width="475.2" height="323.208"/>
+  </clipPath>
+ </defs>
+</svg>

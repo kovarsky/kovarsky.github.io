@@ -1,0 +1,83 @@
+{
+  "source": "materials/reports/kaggle-boosting/kaggle-data/analysis.json",
+  "sample": {
+    "structured": 40,
+    "unstructured": 31,
+    "llm": 17,
+    "other": 12
+  },
+  "families": {
+    "Бустинг деревьев": {
+      "structured": 24,
+      "unstructured": 2,
+      "llm": 1,
+      "other": 0
+    },
+    "MLP / TabM": {
+      "structured": 14,
+      "unstructured": 3,
+      "llm": 0,
+      "other": 3
+    },
+    "Линейные / логистические": {
+      "structured": 9,
+      "unstructured": 3,
+      "llm": 0,
+      "other": 0
+    },
+    "CNN / U-Net / YOLO": {
+      "structured": 5,
+      "unstructured": 13,
+      "llm": 0,
+      "other": 1
+    },
+    "Трансформеры, кроме LLM": {
+      "structured": 5,
+      "unstructured": 13,
+      "llm": 0,
+      "other": 2
+    },
+    "RNN: GRU / LSTM": {
+      "structured": 3,
+      "unstructured": 0,
+      "llm": 0,
+      "other": 0
+    },
+    "Генеративные LLM": {
+      "structured": 0,
+      "unstructured": 0,
+      "llm": 17,
+      "other": 1
+    },
+    "AutoGluon": {
+      "structured": 4,
+      "unstructured": 1,
+      "llm": 0,
+      "other": 0
+    },
+    "Другие именованные модели": {
+      "structured": 3,
+      "unstructured": 11,
+      "llm": 0,
+      "other": 2
+    },
+    "Нет тегов моделей": {
+      "structured": 6,
+      "unstructured": 2,
+      "llm": 0,
+      "other": 6
+    }
+  },
+  "libraries_structured": {
+    "XGBoost": 18,
+    "LightGBM": 13,
+    "CatBoost": 13
+  },
+  "boosting_n": 27,
+  "methods": {
+    "ensemble": 23,
+    "feature_engineering": 22,
+    "cross_validation": 14,
+    "stacking": 10
+  }
+}

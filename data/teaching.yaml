@@ -4,6 +4,8 @@ ru:
   club: Кружок по искусственному интеллекту — Т-образование
   club_description: Материалы для школьников. В интерактивных лекциях можно менять параметры и наблюдать, как работают алгоритмы.
   school: Школа анализа данных
+  physics: Закройте, дует!
+  open_videos: Смотреть видео ↗
   open_lecture: Открыть лекцию →
   open_course: Материалы курса на GitHub ↗
   lectures:
@@ -25,6 +27,12 @@ ru:
     url: https://github.com/yandexdataschool/nlp_course
     image: teaching/ysda-logo.png
     alt: Логотип Школы анализа данных — перцептрон
+  videos:
+    title: Видео о физике
+    description: Оптика, механика и физические эксперименты.
+    url: https://zakroiteduet.github.io/video/
+    image: teaching/newton-apple.jpg
+    alt: Логотип «Закройте, дует!» — яблоко
 
 en:
   title: Teaching
@@ -32,6 +40,8 @@ en:
   club: Artificial Intelligence Club — T-Education
   club_description: Materials for school students. Explore how algorithms work by changing parameters in interactive lectures.
   school: Yandex School of Data Analysis
+  physics: Закройте, дует!
+  open_videos: Watch videos ↗
   open_lecture: Open lecture →
   open_course: Course materials on GitHub ↗
   language: In Russian
@@ -54,3 +64,9 @@ en:
     url: https://github.com/yandexdataschool/nlp_course
     image: teaching/ysda-logo.png
     alt: Yandex School of Data Analysis perceptron logo
+  videos:
+    title: Physics videos
+    description: Optics, mechanics, and physics experiments.
+    url: https://zakroiteduet.github.io/video/
+    image: teaching/newton-apple.jpg
+    alt: Закройте, дует! logo — an apple

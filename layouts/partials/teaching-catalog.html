@@ -22,4 +22,8 @@
     <h2 id="ysda" class="teaching-group-title">{{ $labels.school }}</h2>
     {{ partial "teaching-card.html" (dict "card" $labels.course "compact" $compact "action" $labels.open_course "course" true) }}
   </section>
+  <section class="teaching-group" aria-labelledby="physics-videos">
+    <h2 id="physics-videos" class="teaching-group-title">{{ $labels.physics }}</h2>
+    {{ partial "teaching-card.html" (dict "card" $labels.videos "compact" $compact "language" $labels.language "action" $labels.open_videos "course" true) }}
+  </section>
 </div>

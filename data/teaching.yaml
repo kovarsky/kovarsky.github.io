@@ -1,0 +1,56 @@
+ru:
+  title: Преподавание
+  all: Все материалы →
+  club: Кружок по искусственному интеллекту — Т-образование
+  club_description: Материалы для школьников. В интерактивных лекциях можно менять параметры и наблюдать, как работают алгоритмы.
+  school: Школа анализа данных
+  open_lecture: Открыть лекцию →
+  open_course: Материалы курса на GitHub ↗
+  lectures:
+    - title: Кластеризация
+      description: Как находить группы в данных. k-means, DBSCAN и интерактивные примеры.
+      url: /presentations/clustering/
+      image: teaching/kandinsky.jpg
+      alt: Василий Кандинский — «Круги в круге»
+      credit: Василий Кандинский · «Круги в круге», 1923
+    - title: Градиентный бустинг и интерпретация деревянных моделей
+      description: Пошаговое построение ансамбля, просмотр деревьев, важности признаков и SHAP.
+      url: /presentations/boosting/
+      image: teaching/mondrian.jpg
+      alt: Пит Мондриан — Broadway Boogie Woogie
+      credit: Пит Мондриан · Broadway Boogie Woogie, 1942–43
+  course:
+    title: Обработка естественного языка — NLP
+    description: "Курс ШАД: лекции, семинары и задания по обработке естественного языка."
+    url: https://github.com/yandexdataschool/nlp_course
+    image: teaching/ysda-logo.png
+    alt: Логотип Школы анализа данных — перцептрон
+
+en:
+  title: Teaching
+  all: All materials →
+  club: Artificial Intelligence Club — T-Education
+  club_description: Materials for school students. Explore how algorithms work by changing parameters in interactive lectures.
+  school: Yandex School of Data Analysis
+  open_lecture: Open lecture →
+  open_course: Course materials on GitHub ↗
+  language: In Russian
+  lectures:
+    - title: Clustering
+      description: Finding groups in data. k-means, DBSCAN, and interactive examples.
+      url: /presentations/clustering/
+      image: teaching/kandinsky.jpg
+      alt: Wassily Kandinsky — Circles in a Circle
+      credit: Wassily Kandinsky · Circles in a Circle, 1923
+    - title: Gradient Boosting and Tree Model Interpretation
+      description: Build an ensemble step by step, inspect its trees, and explore feature importance and SHAP.
+      url: /presentations/boosting/
+      image: teaching/mondrian.jpg
+      alt: Piet Mondrian — Broadway Boogie Woogie
+      credit: Piet Mondrian · Broadway Boogie Woogie, 1942–43
+  course:
+    title: Natural Language Processing
+    description: The YSDA course with lectures, seminars, and assignments on natural language processing.
+    url: https://github.com/yandexdataschool/nlp_course
+    image: teaching/ysda-logo.png
+    alt: Yandex School of Data Analysis perceptron logo

@@ -1,0 +1,25 @@
+{{- $page := .context -}}
+{{- $compact := .compact -}}
+{{- $labels := index site.Data.teaching $page.Language.Lang -}}
+{{- $teaching := $page.Site.GetPage "/teaching" -}}
+<div class="teaching-catalog{{ if $compact }} teaching-compact{{ end }}">
+  {{ if $compact }}
+  <div class="teaching-heading">
+    <h2><a href="{{ $teaching.RelPermalink }}">{{ $labels.title }}</a></h2>
+    <a class="teaching-all" href="{{ $teaching.RelPermalink }}">{{ $labels.all }}</a>
+  </div>
+  {{ end }}
+  <section class="teaching-group" aria-labelledby="ai-club">
+    <h2 id="ai-club" class="teaching-group-title">{{ if $compact }}<a href="{{ $teaching.RelPermalink }}#ai-club">{{ $labels.club }}</a>{{ else }}{{ $labels.club }}{{ end }}</h2>
+    {{ if not $compact }}<p class="teaching-intro">{{ $labels.club_description }}</p>{{ end }}
+    <div class="teaching-grid">
+    {{ range $labels.lectures }}
+      {{ partial "teaching-card.html" (dict "card" . "compact" $compact "language" $labels.language "action" $labels.open_lecture "course" false) }}
+    {{ end }}
+    </div>
+  </section>
+  <section class="teaching-group" aria-labelledby="ysda">
+    <h2 id="ysda" class="teaching-group-title">{{ $labels.school }}</h2>
+    {{ partial "teaching-card.html" (dict "card" $labels.course "compact" $compact "action" $labels.open_course "course" true) }}
+  </section>
+</div>

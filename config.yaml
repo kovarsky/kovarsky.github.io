@@ -56,6 +56,10 @@ languages:
           name: "Home"
           url: /
           weight: 1
+        - identifier: teaching
+          name: "Teaching"
+          url: /teaching/
+          weight: 2
   ru:
     languageName: "Русский"
     weight: 2
@@ -70,6 +74,10 @@ languages:
           name: "Главная"
           url: /
           weight: 1
+        - identifier: teaching
+          name: "Преподавание"
+          url: /teaching/
+          weight: 2
 
 # Search / outputs
 outputs:

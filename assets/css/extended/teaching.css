@@ -1,0 +1,59 @@
+.home-info { min-height: auto; margin: 48px 0 32px; }
+.home-info .entry-footer { margin-top: 14px; }
+.teaching-catalog { margin: 0 0 44px; }
+.teaching-catalog a { box-shadow: none; text-decoration: none; }
+.teaching-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
+.teaching-heading h2 { margin: 0; font-size: 28px; }
+.teaching-all { font-size: 14px; color: var(--secondary); white-space: nowrap; }
+.teaching-group + .teaching-group { margin-top: 42px; }
+.teaching-catalog .teaching-group-title { margin: 0 0 16px; font-size: 24px; line-height: 1.35; font-weight: 650; }
+.teaching-catalog .teaching-intro { margin: 0 0 24px; color: var(--secondary); font-size: 16px; line-height: 1.6; }
+.teaching-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.teaching-card { display: flex; flex-direction: column; min-width: 0; border: 1px solid var(--border); border-radius: 12px; background: var(--entry); overflow: hidden; }
+.teaching-card:hover { border-color: var(--secondary); }
+.teaching-card-link { display: flex; flex-direction: column; flex: 1; color: var(--primary); }
+.teaching-card-link:focus-visible { outline: 3px solid var(--primary); outline-offset: -4px; border-radius: 12px; }
+.teaching-image { display: flex; align-items: center; justify-content: center; height: 228px; padding: 16px; background: #f3f0e8; flex-shrink: 0; }
+.teaching-image img { display: block; width: 100%; height: 100%; max-height: 100%; object-fit: contain; margin: 0; border-radius: 0; }
+.teaching-card-body { display: flex; flex-direction: column; align-items: flex-start; padding: 20px; flex: 1; }
+.teaching-catalog .teaching-card h3 { margin: 0; font-size: 21px; line-height: 1.35; }
+.teaching-card-body p { margin: 12px 0 18px; font-size: 15px; line-height: 1.6; color: var(--secondary); }
+.teaching-language { display: inline-block; margin-bottom: 8px; color: var(--secondary); font-size: 12px; letter-spacing: .03em; }
+.teaching-action { display: inline-block; margin-top: auto; padding-top: 14px; font-size: 14px; font-weight: 550; }
+.teaching-catalog .teaching-credit { margin: 0; padding: 0 20px 18px; font-size: 11px; line-height: 1.5; color: var(--secondary); }
+.teaching-course .teaching-card-link { flex-direction: row; align-items: stretch; }
+.teaching-course .teaching-image { height: auto; width: 200px; padding: 24px; }
+.teaching-logo { background: #fff; }
+.teaching-course .teaching-card-body { justify-content: center; }
+.teaching-course .teaching-action { margin-top: 0; }
+.teaching-compact .teaching-group-title { font-size: 18px; margin-bottom: 12px; }
+.teaching-compact .teaching-grid { gap: 12px; grid-template-columns: 1fr; }
+.teaching-compact .teaching-card-link { flex-direction: row; align-items: center; }
+.teaching-compact .teaching-image { width: 112px; height: 112px; padding: 12px; }
+.teaching-compact .teaching-card-body { padding: 14px 18px; }
+.teaching-compact .teaching-card h3 { font-size: 18px; }
+.teaching-compact .teaching-action { padding-top: 8px; font-size: 13px; }
+.teaching-compact .teaching-language { margin-bottom: 4px; }
+.teaching-compact .teaching-group + .teaching-group { margin-top: 28px; }
+@media (max-width: 600px) {
+  .teaching-grid { grid-template-columns: 1fr; }
+  .teaching-catalog .teaching-group-title { font-size: 22px; }
+  .teaching-compact .teaching-group-title { font-size: 18px; }
+  .teaching-image { height: 236px; }
+  .teaching-heading h2 { font-size: 25px; }
+  .teaching-card-body { padding: 18px; }
+  .teaching-course .teaching-image { width: 128px; padding: 16px; }
+  .teaching-course .teaching-card h3 { font-size: 19px; }
+  .teaching-compact .teaching-image { width: 96px; height: 108px; padding: 10px; }
+  .teaching-compact .teaching-card-body { padding: 12px; }
+  .teaching-compact .teaching-card h3 { font-size: 16px; }
+  .teaching-course .teaching-card-body p { font-size: 14px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .teaching-card { transition: border-color .15s ease; }
+}
+
+@media (max-width: 480px) {
+  .teaching-catalog:not(.teaching-compact) .teaching-course .teaching-card-link { flex-direction: column; }
+  .teaching-catalog:not(.teaching-compact) .teaching-course .teaching-image { width: 100%; height: 156px; padding: 12px; }
+}

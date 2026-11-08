@@ -1,0 +1,18 @@
+{{- $card := .card -}}
+{{- $image := resources.Get $card.image -}}
+{{- $large := $image.Fit "640x400 webp q85" -}}
+{{- $small := $image.Fit "320x200 webp q85" -}}
+<article class="teaching-card{{ if .course }} teaching-course{{ end }}">
+  <a class="teaching-card-link" href="{{ $card.url }}">
+    <div class="teaching-image{{ if .course }} teaching-logo{{ end }}">
+      <img src="{{ $small.RelPermalink }}" srcset="{{ $small.RelPermalink }} {{ $small.Width }}w, {{ $large.RelPermalink }} {{ $large.Width }}w" sizes="{{ if .compact }}88px{{ else if .course }}(max-width: 480px) 96px, 168px{{ else }}(max-width: 600px) calc(100vw - 48px), 336px{{ end }}" width="{{ $large.Width }}" height="{{ $large.Height }}" alt="{{ $card.alt }}" loading="lazy" decoding="async">
+    </div>
+    <div class="teaching-card-body">
+      {{ with .language }}<span class="teaching-language">{{ . }}</span>{{ end }}
+      <h3>{{ $card.title }}</h3>
+      {{ if not .compact }}<p>{{ $card.description }}</p>{{ end }}
+      <span class="teaching-action">{{ .action }}</span>
+    </div>
+  </a>
+  {{ if not .compact }}{{ with $card.credit }}<p class="teaching-credit">{{ . }}</p>{{ end }}{{ end }}
+</article>

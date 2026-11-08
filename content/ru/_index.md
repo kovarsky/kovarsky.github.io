@@ -1,5 +1,4 @@
 ---
 title: "Главная"
+teachingHome: true
 ---
-
-
